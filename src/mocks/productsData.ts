@@ -1,7 +1,29 @@
 
 // Mock data for products
 
-export const allProducts = [
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  currency: string;
+  storeId: string;
+  storeName: string;
+  rating: number;
+  isNew: boolean;
+  isFeatured: boolean;
+  category?: string;
+  description?: string;
+  dimensions?: string;
+  material?: string;
+  stock: number;
+  images?: string[];
+  oldPrice?: number;
+  reviews?: number;
+  origin?: string;
+}
+
+export const allProducts: Product[] = [
   // Featured Products
   {
     id: "p1",
@@ -19,6 +41,7 @@ export const allProducts = [
     dimensions: "8\" diameter x 3\" height",
     material: "Oak",
     stock: 15,
+    reviews: 24,
     images: [
       "https://images.unsplash.com/photo-1605666807892-a0413a0d0f1b?ixlib=rb-4.0.3",
       "https://images.unsplash.com/photo-1578912996078-30307862a84f?ixlib=rb-4.0.3",
@@ -29,6 +52,7 @@ export const allProducts = [
     id: "p2",
     name: "Organic Cotton T-Shirt",
     price: 25.99,
+    oldPrice: 32.99,
     image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3",
     currency: "USD",
     storeId: "s2",
@@ -38,13 +62,15 @@ export const allProducts = [
     isFeatured: true,
     category: "Fashion",
     description: "Sustainable cotton t-shirt",
-    stock: 78
+    stock: 78,
+    reviews: 16
   },
   // Add more products as needed
   {
     id: "p3",
     name: "Handmade Leather Wallet",
     price: 49.99,
+    oldPrice: 59.99,
     image: "https://images.unsplash.com/photo-1473783154683-83ba01fdf4d7?ixlib=rb-4.0.3",
     currency: "USD",
     storeId: "s3",
@@ -54,7 +80,8 @@ export const allProducts = [
     isFeatured: true,
     category: "Accessories",
     description: "Handmade leather wallet",
-    stock: 32
+    stock: 32,
+    reviews: 42
   }
 ];
 

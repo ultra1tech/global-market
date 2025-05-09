@@ -10,7 +10,7 @@ import { toast } from '@/components/ui/use-toast';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const { addItem } = useCart(); // Changed from addToCart to addItem
+  const { addItem } = useCart();
   
   // Find the product with the matching ID
   const product = allProducts.find(p => p.id === id);
@@ -31,11 +31,14 @@ const ProductDetail = () => {
   }
 
   const handleAddToCart = () => {
-    addItem(product); // Use addItem instead of addToCart
+    addItem(product);
     toast({
       description: `${product.name} added to cart`,
     });
   };
+
+  // Get the number of reviews with a fallback to 0
+  const reviewCount = product.reviews || 0;
 
   return (
     <MainLayout>
@@ -85,14 +88,14 @@ const ProductDetail = () => {
                   className={i < Math.floor(product.rating) ? "text-yellow-500 fill-yellow-500" : "text-gray-300"}
                 />
               ))}
-              <span className="ml-2 text-sm text-gray-600">{product.rating} ({product.reviews || 0} reviews)</span>
+              <span className="ml-2 text-sm text-gray-600">{product.rating} ({reviewCount} reviews)</span>
             </div>
             
             {/* Price */}
             <div className="mt-6 mb-6">
               <span className="text-3xl font-bold text-marketplace-primary">${product.price.toFixed(2)}</span>
               {/* Conditionally render old price only if it exists */}
-              {product.oldPrice && typeof product.oldPrice === 'number' && (
+              {product.oldPrice && (
                 <span className="ml-3 text-lg text-gray-500 line-through">${product.oldPrice.toFixed(2)}</span>
               )}
             </div>
