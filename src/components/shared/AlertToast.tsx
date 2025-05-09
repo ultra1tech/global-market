@@ -70,52 +70,44 @@ export const AlertToast = ({
 // Helper functions to show toasts
 export const showSuccessToast = (title: string, message: string, action?: AlertToastProps['action']) => {
   toast(
-    () => (
-      <AlertToast
-        title={title}
-        message={message}
-        type="success"
-        action={action}
-      />
-    )
+    <AlertToast
+      title={title}
+      message={message}
+      type="success"
+      action={action}
+    />
   );
 };
 
 export const showErrorToast = (title: string, message: string, action?: AlertToastProps['action']) => {
   toast(
-    () => (
-      <AlertToast
-        title={title}
-        message={message}
-        type="error"
-        action={action}
-      />
-    )
+    <AlertToast
+      title={title}
+      message={message}
+      type="error"
+      action={action}
+    />
   );
 };
 
 export const showWarningToast = (title: string, message: string, action?: AlertToastProps['action']) => {
   toast(
-    () => (
-      <AlertToast
-        title={title}
-        message={message}
-        type="warning"
-        action={action}
-      />
-    )
+    <AlertToast
+      title={title}
+      message={message}
+      type="warning"
+      action={action}
+    />
   );
 };
 
 export const showInfoToast = (title: string, message: string, action?: AlertToastProps['action']) => {
   toast(
-    () => (
-      <AlertToast
-        title={title}
-        message={message}
-        type="info"
-        action={action}
-      />
-    )
+    <AlertToast
+      title={title}
+      message={message}
+      type="info"
+      action={action}
+    />
   );
 };
