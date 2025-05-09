@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
+import CartProvider from "./contexts/CartContext";
 
 // Pages
 import Index from "./pages/Index";
@@ -37,51 +38,53 @@ const ProtectedRoute = ({ children, allowedRoles = [] }: { children: React.React
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/browse" element={<Browse />} />
-          <Route path="/products" element={<Browse />} />
-          <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/stores" element={<Stores />} />
-          <Route path="/stores/:id" element={<Stores />} />
-          
-          {/* Protected Routes */}
-          <Route 
-            path="/seller-dashboard/*" 
-            element={
-              <ProtectedRoute allowedRoles={["seller", "admin"]}>
-                <SellerDashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/admin/*" 
-            element={
-              <ProtectedRoute allowedRoles={["admin"]}>
-                <AdminDashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/buyer/*" 
-            element={
-              <ProtectedRoute allowedRoles={["buyer", "admin"]}>
-                {/* We'll create a buyer dashboard component later */}
-                <div>Buyer Dashboard</div>
-              </ProtectedRoute>
-            } 
-          />
+      <CartProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/browse" element={<Browse />} />
+            <Route path="/products" element={<Browse />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/stores" element={<Stores />} />
+            <Route path="/stores/:id" element={<Stores />} />
+            
+            {/* Protected Routes */}
+            <Route 
+              path="/seller-dashboard/*" 
+              element={
+                <ProtectedRoute allowedRoles={["seller", "admin"]}>
+                  <SellerDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/*" 
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/buyer/*" 
+              element={
+                <ProtectedRoute allowedRoles={["buyer", "admin"]}>
+                  {/* We'll create a buyer dashboard component later */}
+                  <div>Buyer Dashboard</div>
+                </ProtectedRoute>
+              } 
+            />
 
-          {/* Catch-all route for 404 */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+            {/* Catch-all route for 404 */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </CartProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

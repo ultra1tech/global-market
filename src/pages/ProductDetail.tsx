@@ -6,10 +6,11 @@ import MainLayout from '@/components/layouts/MainLayout';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
 import { Heart, Share2, ArrowLeft, Star } from 'lucide-react';
+import { toast } from '@/components/ui/use-toast';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const { addToCart } = useCart();
+  const { addItem } = useCart(); // Changed from addToCart to addItem
   
   // Find the product with the matching ID
   const product = allProducts.find(p => p.id === id);
@@ -30,7 +31,10 @@ const ProductDetail = () => {
   }
 
   const handleAddToCart = () => {
-    addToCart(product);
+    addItem(product); // Use addItem instead of addToCart
+    toast({
+      description: `${product.name} added to cart`,
+    });
   };
 
   return (
@@ -87,7 +91,8 @@ const ProductDetail = () => {
             {/* Price */}
             <div className="mt-6 mb-6">
               <span className="text-3xl font-bold text-marketplace-primary">${product.price.toFixed(2)}</span>
-              {product.oldPrice && (
+              {/* Conditionally render old price only if it exists */}
+              {product.oldPrice && typeof product.oldPrice === 'number' && (
                 <span className="ml-3 text-lg text-gray-500 line-through">${product.oldPrice.toFixed(2)}</span>
               )}
             </div>
@@ -113,7 +118,7 @@ const ProductDetail = () => {
                 </div>
                 <div>
                   <p className="text-gray-500 text-sm">Origin</p>
-                  <p>{product.origin || "Unknown"}</p>
+                  <p>{"Unknown"}</p>
                 </div>
                 <div>
                   <p className="text-gray-500 text-sm">In Stock</p>

@@ -1,5 +1,24 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "@/components/ui/use-toast";
+
+// Define the product structure that matches our data
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  storeId: string;
+  storeName: string;
+  // Add other optional fields that might be used
+  oldPrice?: number;
+  reviews?: number;
+  stock?: number;
+  category?: string;
+  description?: string;
+  rating?: number;
+  [key: string]: any; // For other dynamic properties
+}
 
 interface CartItem {
   id: string;
@@ -16,7 +35,7 @@ interface CartContextType {
   items: CartItem[];
   totalItems: number;
   totalPrice: number;
-  addItem: (product: any, quantity: number) => void;
+  addItem: (product: Product, quantity?: number) => void;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
@@ -47,7 +66,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem("baw_cart", JSON.stringify(items));
   }, [items]);
   
-  const addItem = (product: any, quantity: number = 1) => {
+  const addItem = (product: Product, quantity: number = 1) => {
     setItems((prevItems) => {
       // Check if item already exists in cart
       const existingItemIndex = prevItems.findIndex(
@@ -58,6 +77,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Update quantity of existing item
         const updatedItems = [...prevItems];
         updatedItems[existingItemIndex].quantity += quantity;
+        
+        toast({
+          description: `Updated ${product.name} quantity in cart`,
+        });
+        
         return updatedItems;
       } else {
         // Add new item to cart
@@ -71,13 +95,26 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
           storeId: product.storeId,
           storeName: product.storeName,
         };
+        
+        toast({
+          description: `${product.name} added to cart`,
+        });
+        
         return [...prevItems, newItem];
       }
     });
   };
   
   const removeItem = (itemId: string) => {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    setItems((prevItems) => {
+      const itemToRemove = prevItems.find(item => item.id === itemId);
+      if (itemToRemove) {
+        toast({
+          description: `${itemToRemove.name} removed from cart`,
+        });
+      }
+      return prevItems.filter((item) => item.id !== itemId);
+    });
   };
   
   const updateQuantity = (itemId: string, quantity: number) => {
@@ -92,6 +129,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   
   const clearCart = () => {
     setItems([]);
+    toast({
+      description: "Cart cleared",
+    });
   };
   
   return (
