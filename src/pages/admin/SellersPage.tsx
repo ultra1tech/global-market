@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
@@ -17,7 +16,8 @@ import {
   Shield,
   ShieldX,
   FileText,
-  Eye
+  Eye,
+  Package as PackageIcon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -601,7 +601,7 @@ const SellersPage = () => {
                 
                 <div className="p-3 bg-gray-50 rounded-lg">
                   <div className="flex items-center mb-2">
-                    <Package className="h-4 w-4 text-gray-500 mr-2" />
+                    <PackageIcon className="h-4 w-4 text-gray-500 mr-2" />
                     <span className="text-sm font-medium">Products</span>
                   </div>
                   <p className="text-sm pl-6">{selectedSeller.productsCount} products</p>
