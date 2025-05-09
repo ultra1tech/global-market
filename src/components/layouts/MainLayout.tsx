@@ -1,5 +1,6 @@
+
 import React, { useState } from "react";
-import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
 import { 
@@ -36,13 +37,13 @@ interface MainLayoutProps {
 }
 
 const categories = [
-  { name: "Fashion", path: "/products?category=fashion" },
-  { name: "Electronics", path: "/products?category=electronics" },
-  { name: "Home & Decor", path: "/products?category=home-decor" },
-  { name: "Beauty", path: "/products?category=beauty" },
-  { name: "Toys", path: "/products?category=toys" },
-  { name: "Food", path: "/products?category=food" },
-  { name: "Accessories", path: "/products?category=accessories" },
+  { name: "Fashion", path: "/browse?category=fashion" },
+  { name: "Electronics", path: "/browse?category=electronics" },
+  { name: "Home & Decor", path: "/browse?category=home-decor" },
+  { name: "Beauty", path: "/browse?category=beauty" },
+  { name: "Toys", path: "/browse?category=toys" },
+  { name: "Food", path: "/browse?category=food" },
+  { name: "Accessories", path: "/browse?category=accessories" },
 ];
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
@@ -56,7 +57,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+      navigate(`/browse?search=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery("");
       setMobileMenuOpen(false);
     }
@@ -67,16 +68,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     navigate("/");
   };
 
-  const isDashboardPage = location.pathname.includes('/dashboard');
-
   // Get dynamic dashboard link based on user role
   const getDashboardLink = () => {
     if (!user) return "/login";
     
     switch(user.role) {
       case "buyer": return "/buyer/dashboard";
-      case "seller": return "/seller/dashboard";
-      case "admin": return "/admin/dashboard";
+      case "seller": return "/seller-dashboard";
+      case "admin": return "/admin";
       default: return "/";
     }
   };
@@ -156,6 +155,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                         All Stores
                       </Link>
                       
+                      <Link 
+                        to="/browse"
+                        className="flex items-center px-3 py-2 mt-2 text-sm font-medium rounded-md hover:bg-muted"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        Browse Products
+                      </Link>
+                      
                       {isAuthenticated && (
                         <>
                           <div className="pt-4 pb-2 border-t border-gray-200 mt-4">
@@ -191,18 +198,30 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                             {user?.role === "seller" && (
                               <>
                                 <Link 
-                                  to="/seller/products"
+                                  to="/seller-dashboard/products"
                                   className="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-muted"
                                   onClick={() => setMobileMenuOpen(false)}
                                 >
                                   My Products
                                 </Link>
                                 <Link 
-                                  to="/seller/orders"
+                                  to="/seller-dashboard/orders"
                                   className="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-muted"
                                   onClick={() => setMobileMenuOpen(false)}
                                 >
                                   Orders
+                                </Link>
+                              </>
+                            )}
+                            
+                            {user?.role === "admin" && (
+                              <>
+                                <Link 
+                                  to="/admin"
+                                  className="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-muted"
+                                  onClick={() => setMobileMenuOpen(false)}
+                                >
+                                  Admin Dashboard
                                 </Link>
                               </>
                             )}
@@ -278,6 +297,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
+              
+              <Link to="/browse" className="text-sm font-medium hover:text-marketplace-primary">
+                Browse
+              </Link>
               
               <Link to="/stores" className="text-sm font-medium hover:text-marketplace-primary">
                 Stores
@@ -376,21 +399,32 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                       {user?.role === "seller" && (
                         <>
                           <DropdownMenuItem asChild>
-                            <Link to="/seller/products">
+                            <Link to="/seller-dashboard/products">
                               <Package className="mr-2 h-4 w-4" />
                               <span>My Products</span>
                             </Link>
                           </DropdownMenuItem>
                           <DropdownMenuItem asChild>
-                            <Link to="/seller/orders">
+                            <Link to="/seller-dashboard/orders">
                               <Package className="mr-2 h-4 w-4" />
                               <span>Orders</span>
                             </Link>
                           </DropdownMenuItem>
                           <DropdownMenuItem asChild>
-                            <Link to="/seller/store-settings">
+                            <Link to="/seller-dashboard/settings">
                               <Store className="mr-2 h-4 w-4" />
                               <span>Store Settings</span>
+                            </Link>
+                          </DropdownMenuItem>
+                        </>
+                      )}
+                      
+                      {user?.role === "admin" && (
+                        <>
+                          <DropdownMenuItem asChild>
+                            <Link to="/admin">
+                              <Settings className="mr-2 h-4 w-4" />
+                              <span>Admin Panel</span>
                             </Link>
                           </DropdownMenuItem>
                         </>

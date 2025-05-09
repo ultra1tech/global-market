@@ -1,13 +1,16 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { allProducts } from '@/mocks/productsData';
 import MainLayout from '@/components/layouts/MainLayout';
 import { showInfoToast } from '@/components/shared/AlertToast';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Index = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const featuredProducts = allProducts.filter(product => product.isFeatured).slice(0, 3);
 
   const handleShowToast = () => {
@@ -16,9 +19,22 @@ const Index = () => {
       "Discover unique products from sellers around the world.", 
       {
         label: "Browse Products",
-        onClick: () => window.location.href = "/products"
+        onClick: () => navigate("/browse")
       }
     );
+  };
+
+  const handleSellerDashboard = () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    
+    if (user.role === "seller" || user.role === "admin") {
+      navigate("/seller-dashboard");
+    } else {
+      navigate("/register");
+    }
   };
 
   return (
@@ -111,7 +127,7 @@ const Index = () => {
           
           <div className="mt-12 text-center">
             <Button asChild>
-              <Link to="/products">View All Products</Link>
+              <Link to="/browse">View All Products</Link>
             </Button>
           </div>
         </div>
@@ -132,7 +148,7 @@ const Index = () => {
               "Toys", "Food", "Accessories", "Art"].map((category) => (
               <Link 
                 key={category}
-                to={`/products?category=${category.toLowerCase().replace(/\s+/g, '-')}`}
+                to={`/browse?category=${category.toLowerCase().replace(/\s+/g, '-')}`}
                 className="bg-white rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow"
               >
                 <h3 className="font-medium text-lg mb-2">{category}</h3>
@@ -154,9 +170,9 @@ const Index = () => {
             <Button 
               variant="secondary" 
               size="lg"
-              asChild
+              onClick={handleSellerDashboard}
             >
-              <Link to="/register">Start Selling</Link>
+              {user?.role === "seller" ? "Seller Dashboard" : "Start Selling"}
             </Button>
           </div>
         </div>

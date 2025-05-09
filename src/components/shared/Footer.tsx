@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/products" className="text-sm text-gray-600 hover:text-marketplace-primary">
+                <Link to="/browse" className="text-sm text-gray-600 hover:text-marketplace-primary">
                   Products
                 </Link>
               </li>
@@ -61,14 +61,14 @@ const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-600 hover:text-marketplace-primary">
+                <Link to="/about" className="text-sm text-gray-600 hover:text-marketplace-primary">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-600 hover:text-marketplace-primary">
+                <Link to="/contact" className="text-sm text-gray-600 hover:text-marketplace-primary">
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -78,34 +78,34 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4">Customer Service</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-sm text-gray-600 hover:text-marketplace-primary">
+                <Link to="/shipping-policy" className="text-sm text-gray-600 hover:text-marketplace-primary">
                   Shipping Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-600 hover:text-marketplace-primary">
+                <Link to="/returns" className="text-sm text-gray-600 hover:text-marketplace-primary">
                   Return & Refund
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-600 hover:text-marketplace-primary">
+                <Link to="/privacy" className="text-sm text-gray-600 hover:text-marketplace-primary">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-600 hover:text-marketplace-primary">
+                <Link to="/terms" className="text-sm text-gray-600 hover:text-marketplace-primary">
                   Terms of Service
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-600 hover:text-marketplace-primary">
+                <Link to="/help" className="text-sm text-gray-600 hover:text-marketplace-primary">
                   Help Center
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-gray-600 hover:text-marketplace-primary">
+                <Link to="/faq" className="text-sm text-gray-600 hover:text-marketplace-primary">
                   FAQs
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -142,15 +142,15 @@ const Footer: React.FC = () => {
               &copy; {new Date().getFullYear()} B.A.W. Marketplace. All rights reserved.
             </p>
             <div className="flex space-x-4 mt-4 md:mt-0">
-              <a href="#" className="text-xs text-gray-500 hover:text-marketplace-primary">
+              <Link to="/privacy" className="text-xs text-gray-500 hover:text-marketplace-primary">
                 Privacy Policy
-              </a>
-              <a href="#" className="text-xs text-gray-500 hover:text-marketplace-primary">
+              </Link>
+              <Link to="/terms" className="text-xs text-gray-500 hover:text-marketplace-primary">
                 Terms of Service
-              </a>
-              <a href="#" className="text-xs text-gray-500 hover:text-marketplace-primary">
+              </Link>
+              <Link to="/cookies" className="text-xs text-gray-500 hover:text-marketplace-primary">
                 Cookies
-              </a>
+              </Link>
             </div>
           </div>
         </div>
