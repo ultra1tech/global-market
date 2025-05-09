@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -49,6 +50,10 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Marketplace primary color - deep blue */
+    --marketplace-primary: 220 60% 36%;
+    --marketplace-primary-hover: 220 60% 30%;
   }
 
   .dark {
@@ -99,3 +104,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom container for marketplace */
+@layer components {
+  .marketplace-container {
+    @apply container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+

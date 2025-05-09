@@ -1,249 +1,134 @@
 
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { toast } from "sonner";
+import React, { createContext, useContext, useState } from "react";
 
-// Define types
+// Define user types
 type UserRole = "buyer" | "seller" | "admin";
-
-interface Store {
-  id: string;
-  name: string;
-  description: string;
-  logo: string;
-  country: string;
-  language: string;
-}
 
 interface User {
   id: string;
   name: string;
   email: string;
   role: UserRole;
-  store?: Store;
   avatar?: string;
 }
 
 interface AuthContextType {
   user: User | null;
-  loading: boolean;
-  login: (email: string, password: string, role?: UserRole) => Promise<void>;
-  register: (email: string, password: string, name: string, role: UserRole) => Promise<void>;
-  logout: () => void;
   isAuthenticated: boolean;
-  updateUser: (userData: Partial<User>) => void;
-  createStore: (storeData: Omit<Store, "id">) => Promise<void>;
-  updateStore: (storeData: Partial<Store>) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
+  register: (userData: Partial<User> & { password: string }) => Promise<void>;
+  logout: () => void;
 }
 
-// Mock users for demo
-const MOCK_USERS = [
+// Create context with default values
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  isAuthenticated: false,
+  login: async () => {},
+  register: async () => {},
+  logout: () => {},
+});
+
+// Mock user data
+const mockUsers = [
   {
-    id: "b1",
+    id: "1",
     name: "John Buyer",
     email: "buyer@example.com",
-    password: "password",
+    password: "password123",
     role: "buyer" as UserRole,
-    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3"
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
   },
   {
-    id: "s1",
+    id: "2",
     name: "Sarah Seller",
     email: "seller@example.com",
-    password: "password",
+    password: "password123",
     role: "seller" as UserRole,
-    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3",
-    store: {
-      id: "st1",
-      name: "Sarah's Crafts",
-      description: "Handmade crafts from around the world",
-      logo: "https://images.unsplash.com/photo-1633409361618-c73427e4e206?ixlib=rb-4.0.3",
-      country: "United States",
-      language: "English"
-    }
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
   },
   {
-    id: "a1",
+    id: "3",
     name: "Admin User",
     email: "admin@example.com",
-    password: "password",
+    password: "password123",
     role: "admin" as UserRole,
-    avatar: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3"
-  }
+    avatar: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
+  },
 ];
 
-// Create context
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(() => {
+    // Check if user data exists in localStorage
+    const storedUser = localStorage.getItem("baw_user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
-  useEffect(() => {
-    // Check for saved user in localStorage
-    const savedUser = localStorage.getItem("baw_user");
-    if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch (error) {
-        console.error("Error parsing saved user", error);
-        localStorage.removeItem("baw_user");
-      }
-    }
-    setLoading(false);
-  }, []);
+  const isAuthenticated = !!user;
 
-  const login = async (email: string, password: string, role?: UserRole): Promise<void> => {
-    setLoading(true);
-    try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Find user by email and password
-      const foundUser = MOCK_USERS.find(u => 
-        u.email === email && 
-        u.password === password && 
-        (!role || u.role === role)
-      );
-      
-      if (!foundUser) {
-        throw new Error("Invalid credentials");
-      }
-      
-      // Remove password from user object
-      const { password: _, ...userWithoutPassword } = foundUser;
-      
-      // Set user in state and localStorage
+  const login = async (email: string, password: string) => {
+    // Simulate API request delay
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    
+    // Find user with matching email and password
+    const foundUser = mockUsers.find(
+      (u) => u.email === email && u.password === password
+    );
+    
+    if (foundUser) {
+      // Remove password from user data before storing
+      const { password, ...userWithoutPassword } = foundUser;
       setUser(userWithoutPassword);
       localStorage.setItem("baw_user", JSON.stringify(userWithoutPassword));
-      
-      toast.success("Login successful");
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Login failed");
-      throw error;
-    } finally {
-      setLoading(false);
+    } else {
+      throw new Error("Invalid email or password");
     }
   };
 
-  const register = async (email: string, password: string, name: string, role: UserRole): Promise<void> => {
-    setLoading(true);
-    try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Check if email already exists
-      const emailExists = MOCK_USERS.some(u => u.email === email);
-      if (emailExists) {
-        throw new Error("Email already in use");
-      }
-      
-      // Create new user
-      const newUser: User = {
-        id: `${role[0]}${MOCK_USERS.length + 1}`, // Generate dummy ID
-        name,
-        email,
-        role,
-      };
-      
-      // In a real app, we would save to backend
-      // For mock purposes, we'll just set in local state
-      setUser(newUser);
-      localStorage.setItem("baw_user", JSON.stringify(newUser));
-      
-      toast.success("Registration successful");
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Registration failed");
-      throw error;
-    } finally {
-      setLoading(false);
+  const register = async (userData: Partial<User> & { password: string }) => {
+    // Simulate API request delay
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    
+    // Check if email already exists
+    const emailExists = mockUsers.some((u) => u.email === userData.email);
+    if (emailExists) {
+      throw new Error("Email already in use");
     }
+    
+    // Create new user (in a real app, this would be handled by the backend)
+    const newUser = {
+      id: `user_${Date.now()}`,
+      name: userData.name || "",
+      email: userData.email || "",
+      role: userData.role || "buyer",
+      avatar: userData.avatar,
+    };
+    
+    // Login the new user
+    setUser(newUser);
+    localStorage.setItem("baw_user", JSON.stringify(newUser));
   };
 
-  const logout = (): void => {
+  const logout = () => {
     setUser(null);
     localStorage.removeItem("baw_user");
-    toast.success("Successfully logged out");
   };
 
-  const updateUser = (userData: Partial<User>): void => {
-    if (user) {
-      const updatedUser = { ...user, ...userData };
-      setUser(updatedUser);
-      localStorage.setItem("baw_user", JSON.stringify(updatedUser));
-      toast.success("Profile updated successfully");
-    }
-  };
-
-  const createStore = async (storeData: Omit<Store, "id">): Promise<void> => {
-    if (!user || user.role !== "seller") {
-      toast.error("Only sellers can create stores");
-      return;
-    }
-    
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const newStore: Store = {
-        ...storeData,
-        id: `st${Math.floor(Math.random() * 1000)}`, // Generate dummy ID
-      };
-      
-      // Update user with store
-      const updatedUser = { ...user, store: newStore };
-      setUser(updatedUser);
-      localStorage.setItem("baw_user", JSON.stringify(updatedUser));
-      
-      toast.success("Store created successfully");
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to create store");
-      throw error;
-    }
-  };
-
-  const updateStore = async (storeData: Partial<Store>): Promise<void> => {
-    if (!user || user.role !== "seller" || !user.store) {
-      toast.error("No store to update");
-      return;
-    }
-    
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Update store data
-      const updatedStore = { ...user.store, ...storeData };
-      const updatedUser = { ...user, store: updatedStore };
-      
-      setUser(updatedUser);
-      localStorage.setItem("baw_user", JSON.stringify(updatedUser));
-      
-      toast.success("Store updated successfully");
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to update store");
-      throw error;
-    }
-  };
-
-  const value = {
-    user,
-    loading,
-    login,
-    register,
-    logout,
-    isAuthenticated: !!user,
-    updateUser,
-    createStore,
-    updateStore,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated,
+        login,
+        register,
+        logout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
-};
+export const useAuth = () => useContext(AuthContext);
+
+export default AuthProvider;
