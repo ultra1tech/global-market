@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -32,6 +31,10 @@ import Footer from "@/components/shared/Footer";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import CurrencySwitcher from "@/components/shared/CurrencySwitcher";
 
+interface MainLayoutProps {
+  children: React.ReactNode;
+}
+
 const categories = [
   { name: "Fashion", path: "/products?category=fashion" },
   { name: "Electronics", path: "/products?category=electronics" },
@@ -42,7 +45,7 @@ const categories = [
   { name: "Accessories", path: "/products?category=accessories" },
 ];
 
-const MainLayout: React.FC = () => {
+const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const { user, logout, isAuthenticated } = useAuth();
   const { totalItems } = useCart();
   const location = useLocation();
@@ -418,7 +421,7 @@ const MainLayout: React.FC = () => {
 
       {/* Main Content */}
       <main className="flex-grow">
-        <Outlet />
+        {children}
       </main>
 
       {/* Footer */}
