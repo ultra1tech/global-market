@@ -17,6 +17,10 @@ import ProductDetail from "./pages/ProductDetail";
 import SellerDashboard from "./pages/SellerDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import Stores from "./pages/Stores";
+import BuyerDashboard from "./pages/buyer/BuyerDashboard";
+import Cart from "./pages/checkout/Cart";
+import Checkout from "./pages/checkout/Checkout";
+import ProductForm from "./pages/seller/ProductForm";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +56,8 @@ const App = () => (
             <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/stores" element={<Stores />} />
             <Route path="/stores/:id" element={<Stores />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
             
             {/* Protected Routes */}
             <Route 
@@ -59,6 +65,14 @@ const App = () => (
               element={
                 <ProtectedRoute allowedRoles={["seller", "admin"]}>
                   <SellerDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/seller/product/new" 
+              element={
+                <ProtectedRoute allowedRoles={["seller", "admin"]}>
+                  <ProductForm />
                 </ProtectedRoute>
               } 
             />
@@ -74,8 +88,7 @@ const App = () => (
               path="/buyer/*" 
               element={
                 <ProtectedRoute allowedRoles={["buyer", "admin"]}>
-                  {/* We'll create a buyer dashboard component later */}
-                  <div>Buyer Dashboard</div>
+                  <BuyerDashboard />
                 </ProtectedRoute>
               } 
             />
