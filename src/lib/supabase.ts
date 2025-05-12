@@ -1,3 +1,4 @@
+
 import { createClient } from '@supabase/supabase-js'
 import { Product } from '@/mocks/productsData';
 
@@ -25,7 +26,34 @@ const createSupabaseClient = () => {
             single: async () => ({ data: null, error: new Error('Mock client: Supabase not configured') }),
           }),
           order: () => ({ data: null, error: new Error('Mock client: Supabase not configured') }),
+          count: (column, options) => ({
+            eq: () => ({ data: null, count: 0, error: new Error('Mock client: Supabase not configured') }),
+          }),
         }),
+        // Add support for count method directly
+        select: (columns, options) => {
+          const selectObj = {
+            eq: () => ({
+              single: async () => ({ data: null, error: new Error('Mock client: Supabase not configured') }),
+            }),
+            order: () => ({ data: null, error: new Error('Mock client: Supabase not configured') }),
+          };
+          
+          // If options include count parameter, add count method/property
+          if (options && options.count) {
+            return {
+              ...selectObj,
+              eq: () => ({
+                ...selectObj.eq(),
+                count: 0,
+              }),
+              head: true,
+              count: 0,
+            };
+          }
+          
+          return selectObj;
+        },
       }),
       storage: {
         from: () => ({
@@ -84,15 +112,15 @@ export const fetchProducts = async () => {
   if (error) throw error;
 
   // Transform to match our Product interface
-  const products: Product[] = data.map(item => ({
+  const products: Product[] = data?.map(item => ({
     id: item.id,
     name: item.name,
     price: item.price,
     oldPrice: item.old_price,
-    image: item.product_images.find((img: any) => img.is_primary)?.url || item.product_images[0]?.url,
+    image: item.product_images?.find((img: any) => img.is_primary)?.url || item.product_images?.[0]?.url,
     currency: 'USD', // Default currency
     storeId: item.store_id,
-    storeName: item.stores.name,
+    storeName: item.stores?.name,
     rating: item.rating || 0,
     isNew: false,
     isFeatured: item.featured,
@@ -100,7 +128,7 @@ export const fetchProducts = async () => {
     description: item.description,
     stock: item.stock,
     reviews: 0, // We'll need to count these separately
-  }));
+  })) || [];
   
   return products;
 };
@@ -119,10 +147,18 @@ export const fetchProductById = async (id: string) => {
   if (error) throw error;
 
   // Get review count
-  const { count: reviewCount } = await supabase
-    .from('reviews')
-    .select('*', { count: 'exact', head: true })
-    .eq('product_id', id);
+  // Use a try-catch block to handle potential mock client errors
+  let reviewCount = 0;
+  try {
+    const countResult = await supabase
+      .from('reviews')
+      .select('*', { count: 'exact', head: true })
+      .eq('product_id', id);
+      
+    reviewCount = countResult.count || 0;
+  } catch (e) {
+    console.warn('Error fetching review count:', e);
+  }
 
   // Transform to match our Product interface
   const product: Product = {
@@ -130,18 +166,18 @@ export const fetchProductById = async (id: string) => {
     name: data.name,
     price: data.price,
     oldPrice: data.old_price,
-    image: data.product_images.find((img: any) => img.is_primary)?.url || data.product_images[0]?.url,
+    image: data.product_images?.find((img: any) => img.is_primary)?.url || data.product_images?.[0]?.url,
     currency: 'USD', // Default currency
     storeId: data.store_id,
-    storeName: data.stores.name,
+    storeName: data.stores?.name,
     rating: data.rating || 0,
     isNew: false,
     isFeatured: data.featured,
     category: data.category,
     description: data.description,
     stock: data.stock,
-    reviews: reviewCount || 0,
-    images: data.product_images.map((img: any) => img.url),
+    reviews: reviewCount,
+    images: data.product_images?.map((img: any) => img.url) || [],
   };
   
   return product;
