@@ -8,35 +8,39 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-const categories = [
-  { name: "Fashion", path: "/browse?category=fashion" },
-  { name: "Electronics", path: "/browse?category=electronics" },
-  { name: "Home & Decor", path: "/browse?category=home-decor" },
-  { name: "Beauty", path: "/browse?category=beauty" },
-  { name: "Toys", path: "/browse?category=toys" },
-  { name: "Food", path: "/browse?category=food" },
-  { name: "Accessories", path: "/browse?category=accessories" },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const DesktopNavigation: React.FC = () => {
+  const { t, direction } = useLanguage();
+  
+  // Categories with translation keys
+  const categories = [
+    { nameKey: "home.categories.fashion", path: "/browse?category=fashion" },
+    { nameKey: "home.categories.electronics", path: "/browse?category=electronics" },
+    { nameKey: "home.categories.homeDecor", path: "/browse?category=home-decor" },
+    { nameKey: "home.categories.beauty", path: "/browse?category=beauty" },
+    { nameKey: "home.categories.food", path: "/browse?category=food" },
+    { nameKey: "home.categories.crafts", path: "/browse?category=crafts" },
+    { nameKey: "home.categories.accessories", path: "/browse?category=accessories" },
+  ];
+
   return (
-    <nav className="hidden md:flex items-center space-x-6">
+    <nav className={`hidden md:flex items-center ${direction === 'rtl' ? 'space-x-reverse' : 'space-x-6'}`}>
       <Link to="/" className="text-sm font-medium hover:text-marketplace-primary">
-        Home
+        {t('common.home')}
       </Link>
       
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="p-0 h-auto text-sm font-medium">
-            Categories
+            {t('common.categories')}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="center" className="w-48">
+        <DropdownMenuContent align="center" className={`w-48 ${direction === 'rtl' ? 'text-right' : ''}`}>
           {categories.map((category) => (
-            <DropdownMenuItem key={category.name} asChild>
+            <DropdownMenuItem key={category.nameKey} asChild>
               <Link to={category.path}>
-                {category.name}
+                {t(category.nameKey)}
               </Link>
             </DropdownMenuItem>
           ))}
@@ -44,11 +48,11 @@ const DesktopNavigation: React.FC = () => {
       </DropdownMenu>
       
       <Link to="/browse" className="text-sm font-medium hover:text-marketplace-primary">
-        Browse
+        {t('common.products')}
       </Link>
       
       <Link to="/stores" className="text-sm font-medium hover:text-marketplace-primary">
-        Stores
+        {t('common.stores')}
       </Link>
     </nav>
   );

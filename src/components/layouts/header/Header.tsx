@@ -8,14 +8,17 @@ import DesktopNavigation from "./DesktopNavigation";
 import SearchBar from "./SearchBar";
 import UserMenuDropdown from "./UserMenuDropdown";
 import CartButton from "./CartButton";
+import WishlistIcon from "./WishlistIcon";
 import MobileMenuContent from "./MobileMenuContent";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import CurrencySwitcher from "@/components/shared/CurrencySwitcher";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t, direction } = useLanguage();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,19 +30,19 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+    <header className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm" dir={direction}>
       <div className="marketplace-container">
         <div className="flex items-center justify-between h-16">
           {/* Mobile Menu Button */}
-          <div className="flex md:hidden">
+          <div className={`flex md:hidden ${direction === 'rtl' ? 'order-last' : 'order-first'}`}>
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <Menu size={24} />
-                  <span className="sr-only">Menu</span>
+                  <span className="sr-only">{t('common.menu')}</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-[85%] sm:w-[350px] pt-10">
+              <SheetContent side={direction === 'rtl' ? 'right' : 'left'} className="w-[85%] sm:w-[350px] pt-10">
                 <MobileMenuContent 
                   searchQuery={searchQuery}
                   setSearchQuery={setSearchQuery}
@@ -56,7 +59,7 @@ const Header: React.FC = () => {
               B.A.W.
             </span>
             <span className="hidden md:inline-block ml-1 text-sm font-medium text-gray-500">
-              Marketplace
+              {t('common.marketplace')}
             </span>
           </Link>
 
@@ -71,13 +74,16 @@ const Header: React.FC = () => {
           />
 
           {/* Right Navigation Items */}
-          <div className="flex items-center space-x-2">
+          <div className={`flex items-center space-x-2 ${direction === 'rtl' && 'flex-row-reverse space-x-reverse'}`}>
             {/* Language & Currency Switchers (Desktop) */}
-            <div className="hidden md:flex items-center space-x-2 mr-2">
+            <div className={`hidden md:flex items-center ${direction === 'rtl' ? 'space-x-reverse mr-0 ml-2' : 'space-x-2 mr-2'}`}>
               <LanguageSwitcher size="icon" />
               <CurrencySwitcher size="icon" />
             </div>
           
+            {/* Wishlist Icon */}
+            <WishlistIcon />
+            
             {/* Cart Button */}
             <CartButton />
 

@@ -1,111 +1,50 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useAuth } from "./contexts/AuthContext";
-import CartProvider from "./contexts/CartContext";
-import LanguageProvider from "./contexts/LanguageContext";
-import CurrencyProvider from "./contexts/CurrencyContext";
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Toaster } from "@/components/ui/sonner"
+import Index from './pages/Index'
+import NotFound from './pages/NotFound'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Browse from './pages/Browse'
+import ProductDetail from './pages/ProductDetail'
+import Cart from './pages/checkout/Cart'
+import Checkout from './pages/checkout/Checkout'
+import SellerDashboard from './pages/SellerDashboard'
+import AdminDashboard from './pages/AdminDashboard'
+import BuyerDashboard from './pages/buyer/BuyerDashboard'
+import OrdersPage from './pages/admin/OrdersPage'
+import PaymentsPage from './pages/admin/PaymentsPage'
+import SellersPage from './pages/admin/SellersPage'
+import Stores from './pages/Stores'
+import WishlistPage from './pages/buyer/WishlistPage'
+import { WishlistProvider } from './contexts/WishlistContext'
 
-// Pages
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Browse from "./pages/Browse";
-import ProductDetail from "./pages/ProductDetail";
-import SellerDashboard from "./pages/SellerDashboard";
-import AdminDashboard from "./pages/AdminDashboard";
-import Stores from "./pages/Stores";
-import BuyerDashboard from "./pages/buyer/BuyerDashboard";
-import Cart from "./pages/checkout/Cart";
-import Checkout from "./pages/checkout/Checkout";
-import ProductForm from "./pages/seller/ProductForm";
+function App() {
+  return (
+    <BrowserRouter>
+      <WishlistProvider>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/browse" element={<Browse />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/seller-dashboard/*" element={<SellerDashboard />} />
+          <Route path="/buyer/dashboard" element={<BuyerDashboard />} />
+          <Route path="/buyer/wishlist" element={<WishlistPage />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/orders" element={<OrdersPage />} />
+          <Route path="/admin/payments" element={<PaymentsPage />} />
+          <Route path="/admin/sellers" element={<SellersPage />} />
+          <Route path="/stores" element={<Stores />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Toaster richColors />
+      </WishlistProvider>
+    </BrowserRouter>
+  )
+}
 
-const queryClient = new QueryClient();
-
-// Route guard for protected routes
-const ProtectedRoute = ({ children, allowedRoles = [] }: { children: React.ReactNode, allowedRoles?: string[] }) => {
-  const { user, isAuthenticated } = useAuth();
-  
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  
-  if (allowedRoles.length > 0 && user && !allowedRoles.includes(user.role)) {
-    return <Navigate to="/" replace />;
-  }
-  
-  return <>{children}</>;
-};
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <LanguageProvider>
-        <CurrencyProvider>
-          <CartProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<Index />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/browse" element={<Browse />} />
-                <Route path="/products" element={<Browse />} />
-                <Route path="/products/:id" element={<ProductDetail />} />
-                <Route path="/stores" element={<Stores />} />
-                <Route path="/stores/:id" element={<Stores />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/checkout" element={<Checkout />} />
-                
-                {/* Protected Routes */}
-                <Route 
-                  path="/seller-dashboard/*" 
-                  element={
-                    <ProtectedRoute allowedRoles={["seller", "admin"]}>
-                      <SellerDashboard />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/seller/product/new" 
-                  element={
-                    <ProtectedRoute allowedRoles={["seller", "admin"]}>
-                      <ProductForm />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/admin/*" 
-                  element={
-                    <ProtectedRoute allowedRoles={["admin"]}>
-                      <AdminDashboard />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/buyer/*" 
-                  element={
-                    <ProtectedRoute allowedRoles={["buyer", "admin"]}>
-                      <BuyerDashboard />
-                    </ProtectedRoute>
-                  } 
-                />
-
-                {/* Catch-all route for 404 */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </CartProvider>
-        </CurrencyProvider>
-      </LanguageProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
-
-export default App;
+export default App

@@ -3,38 +3,47 @@ import React from 'react';
 import { Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
+import { useWishlist } from '@/contexts/WishlistContext';
 
 interface WishlistButtonProps {
   productId: string;
+  productName?: string;
+  productImage?: string;
+  productPrice?: number;
+  productStore?: string;
   size?: 'sm' | 'default' | 'lg' | 'icon'; 
   variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
   className?: string;
-  inWishlist?: boolean;
 }
 
 const WishlistButton: React.FC<WishlistButtonProps> = ({
   productId,
+  productName = '',
+  productImage = '',
+  productPrice = 0,
+  productStore = '',
   size = 'icon',
   variant = 'ghost',
-  className = '',
-  inWishlist = false
+  className = ''
 }) => {
-  const { toast } = useToast();
-  const [isInWishlist, setIsInWishlist] = React.useState(inWishlist);
+  const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  const inWishlist = isInWishlist(productId);
   
   const toggleWishlist = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     
-    setIsInWishlist(!isInWishlist);
-    
-    toast({
-      title: isInWishlist ? "Removed from wishlist" : "Added to wishlist",
-      description: isInWishlist 
-        ? "The item has been removed from your wishlist" 
-        : "The item has been added to your wishlist",
-      duration: 3000,
-    });
+    if (inWishlist) {
+      removeFromWishlist(productId);
+    } else {
+      addToWishlist({
+        id: productId,
+        name: productName,
+        price: productPrice,
+        image: productImage,
+        store: productStore
+      });
+    }
   };
   
   return (
@@ -45,11 +54,11 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({
       onClick={toggleWishlist}
     >
       <Heart 
-        className={`${isInWishlist ? 'fill-red-500 text-red-500' : ''}`}
+        className={`${inWishlist ? 'fill-red-500 text-red-500' : ''}`}
         size={20} 
       />
       <span className="sr-only">
-        {isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
+        {inWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
       </span>
     </Button>
   );

@@ -1,4 +1,3 @@
-
 // Define available languages
 export const availableLanguages = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
@@ -43,6 +42,8 @@ export const translations: Translations = {
       stores: "Stores",
       products: "Products",
       profile: "Profile",
+      menu: "Menu",
+      marketplace: "Marketplace"
     },
     home: {
       hero: {
@@ -101,6 +102,14 @@ export const translations: Translations = {
       terms: "Terms of Use",
       privacy: "Privacy Policy",
       followUs: "Follow Us"
+    },
+    wishlist: {
+      empty: "Your wishlist is empty",
+      itemCount: "You have {{count}} items in your wishlist",
+      clearAll: "Clear All",
+      emptyTitle: "Your wishlist is empty",
+      emptyMessage: "Add products to your wishlist to save them for later",
+      continueShopping: "Continue Shopping"
     }
   },
   es: {
@@ -121,6 +130,8 @@ export const translations: Translations = {
       stores: "Tiendas",
       products: "Productos",
       profile: "Perfil",
+      menu: "Menú",
+      marketplace: "Mercado"
     },
     home: {
       hero: {
@@ -179,6 +190,14 @@ export const translations: Translations = {
       terms: "Términos de Uso",
       privacy: "Política de Privacidad",
       followUs: "Síguenos"
+    },
+    wishlist: {
+      empty: "Tu lista de deseos está vacía",
+      itemCount: "Tienes {{count}} artículos en tu lista de deseos",
+      clearAll: "Borrar Todo",
+      emptyTitle: "Tu lista de deseos está vacía",
+      emptyMessage: "Agrega productos a tu lista de deseos para guardarlos para más tarde",
+      continueShopping: "Continuar Comprando"
     }
   },
   fr: {
@@ -199,6 +218,8 @@ export const translations: Translations = {
       stores: "Boutiques",
       products: "Produits",
       profile: "Profil",
+      menu: "Menu",
+      marketplace: "Marché"
     },
     home: {
       hero: {
@@ -257,6 +278,14 @@ export const translations: Translations = {
       terms: "Conditions d'Utilisation",
       privacy: "Politique de Confidentialité",
       followUs: "Suivez-nous"
+    },
+    wishlist: {
+      empty: "Votre liste de souhaits est vide",
+      itemCount: "Vous avez {{count}} articles dans votre liste de souhaits",
+      clearAll: "Tout Effacer",
+      emptyTitle: "Votre liste de souhaits est vide",
+      emptyMessage: "Ajoutez des produits à votre liste de souhaits pour les sauvegarder pour plus tard",
+      continueShopping: "Continuer les Achats"
     }
   },
   ar: {
@@ -277,6 +306,8 @@ export const translations: Translations = {
       stores: "المتاجر",
       products: "المنتجات",
       profile: "الملف الشخصي",
+      menu: "القائمة",
+      marketplace: "السوق"
     },
     home: {
       hero: {
@@ -335,8 +366,15 @@ export const translations: Translations = {
       terms: "شروط الاستخدام",
       privacy: "سياسة الخصوصية",
       followUs: "تابعنا"
+    },
+    wishlist: {
+      empty: "قائمة المفضلة فارغة",
+      itemCount: "لديك {{count}} عناصر في قائمة المفضلة",
+      clearAll: "مسح الكل",
+      emptyTitle: "قائمة المفضلة فارغة",
+      emptyMessage: "أضف منتجات إلى قائمة المفضلة لحفظها لوقت لاحق",
+      continueShopping: "متابعة التسوق"
     }
-  },
-  // Add additional languages with similar structure
-  // These are placeholder translations - in a real app, you would use professional translations
+  }
+  // Add other languages as needed
 };
