@@ -18,12 +18,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
   product,
   showAddToCart = true
 }) => {
-  const { addToCart } = useCart();
+  const { addItem } = useCart();
   
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(product);
+    addItem(product);
   };
   
   return (

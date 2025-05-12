@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Store } from '@/mocks/storesData';
-import { Star, MapPin } from 'lucide-react';
+import { Star, MapPin, Store as StoreIcon } from 'lucide-react';
 
 interface StoreCardProps {
   store: Store;
@@ -23,7 +23,7 @@ const StoreCard: React.FC<StoreCardProps> = ({ store }) => {
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gray-200">
-              <Store size={48} className="text-gray-400" />
+              <StoreIcon size={48} className="text-gray-400" />
             </div>
           )}
         </div>
@@ -37,7 +37,7 @@ const StoreCard: React.FC<StoreCardProps> = ({ store }) => {
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-gray-100">
-                <Store size={24} className="text-gray-400" />
+                <StoreIcon size={24} className="text-gray-400" />
               </div>
             )}
           </div>
