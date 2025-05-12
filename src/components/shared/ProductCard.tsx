@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Product } from '@/mocks/productsData';
 import { useCart } from '@/contexts/CartContext';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useCurrency } from '@/contexts/CurrencyContext';
 import WishlistButton from './WishlistButton';
 import { ShoppingCart } from 'lucide-react';
 
@@ -19,6 +21,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   showAddToCart = true
 }) => {
   const { addItem } = useCart();
+  const { t } = useLanguage();
+  const { formatPrice } = useCurrency();
   
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -40,12 +44,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
           {product.isNew && (
             <Badge className="absolute top-2 left-2 bg-marketplace-primary">
-              New
+              {t('product.new')}
             </Badge>
           )}
           {product.oldPrice && (
             <Badge variant="outline" className="absolute bottom-2 left-2 bg-white">
-              Sale
+              {t('product.sale')}
             </Badge>
           )}
         </div>
@@ -61,11 +65,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </h3>
             <div className="flex items-baseline mt-2">
               <span className="font-bold text-marketplace-primary">
-                ${product.price.toFixed(2)}
+                {formatPrice(product.price)}
               </span>
               {product.oldPrice && (
                 <span className="ml-2 text-sm text-gray-500 line-through">
-                  ${product.oldPrice.toFixed(2)}
+                  {formatPrice(product.oldPrice)}
                 </span>
               )}
             </div>
@@ -84,7 +88,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 onClick={handleAddToCart}
               >
                 <ShoppingCart className="mr-1 h-4 w-4" />
-                Add to Cart
+                {t('product.addToCart')}
               </Button>
             </div>
           )}

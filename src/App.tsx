@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import CartProvider from "./contexts/CartContext";
+import LanguageProvider from "./contexts/LanguageContext";
+import CurrencyProvider from "./contexts/CurrencyContext";
 
 // Pages
 import Index from "./pages/Index";
@@ -42,62 +44,66 @@ const ProtectedRoute = ({ children, allowedRoles = [] }: { children: React.React
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <CartProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/browse" element={<Browse />} />
-            <Route path="/products" element={<Browse />} />
-            <Route path="/products/:id" element={<ProductDetail />} />
-            <Route path="/stores" element={<Stores />} />
-            <Route path="/stores/:id" element={<Stores />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            
-            {/* Protected Routes */}
-            <Route 
-              path="/seller-dashboard/*" 
-              element={
-                <ProtectedRoute allowedRoles={["seller", "admin"]}>
-                  <SellerDashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/seller/product/new" 
-              element={
-                <ProtectedRoute allowedRoles={["seller", "admin"]}>
-                  <ProductForm />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/admin/*" 
-              element={
-                <ProtectedRoute allowedRoles={["admin"]}>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/buyer/*" 
-              element={
-                <ProtectedRoute allowedRoles={["buyer", "admin"]}>
-                  <BuyerDashboard />
-                </ProtectedRoute>
-              } 
-            />
+      <LanguageProvider>
+        <CurrencyProvider>
+          <CartProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<Index />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/browse" element={<Browse />} />
+                <Route path="/products" element={<Browse />} />
+                <Route path="/products/:id" element={<ProductDetail />} />
+                <Route path="/stores" element={<Stores />} />
+                <Route path="/stores/:id" element={<Stores />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/checkout" element={<Checkout />} />
+                
+                {/* Protected Routes */}
+                <Route 
+                  path="/seller-dashboard/*" 
+                  element={
+                    <ProtectedRoute allowedRoles={["seller", "admin"]}>
+                      <SellerDashboard />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/seller/product/new" 
+                  element={
+                    <ProtectedRoute allowedRoles={["seller", "admin"]}>
+                      <ProductForm />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/*" 
+                  element={
+                    <ProtectedRoute allowedRoles={["admin"]}>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/buyer/*" 
+                  element={
+                    <ProtectedRoute allowedRoles={["buyer", "admin"]}>
+                      <BuyerDashboard />
+                    </ProtectedRoute>
+                  } 
+                />
 
-            {/* Catch-all route for 404 */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </CartProvider>
+                {/* Catch-all route for 404 */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </CartProvider>
+        </CurrencyProvider>
+      </LanguageProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

@@ -3,14 +3,29 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Store } from '@/mocks/storesData';
 import { Star, MapPin, Store as StoreIcon } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+// Define the Store interface instead of importing it
+interface Store {
+  id: string;
+  name: string;
+  logo?: string;
+  coverImage?: string;
+  country: string;
+  verified: boolean;
+  rating: number;
+  reviewCount: number;
+  productCount: number;
+}
 
 interface StoreCardProps {
   store: Store;
 }
 
 const StoreCard: React.FC<StoreCardProps> = ({ store }) => {
+  const { t } = useLanguage();
+  
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
       <div className="relative">
@@ -44,7 +59,7 @@ const StoreCard: React.FC<StoreCardProps> = ({ store }) => {
         </div>
         {store.verified && (
           <Badge className="absolute top-2 right-2 bg-marketplace-primary">
-            Verified
+            {t('store.verified')}
           </Badge>
         )}
       </div>
@@ -62,11 +77,11 @@ const StoreCard: React.FC<StoreCardProps> = ({ store }) => {
           <div className="flex items-center">
             <Star size={16} className="text-yellow-500 mr-1" />
             <span className="text-sm font-medium">
-              {store.rating} ({store.reviewCount} reviews)
+              {store.rating} ({store.reviewCount} {t('store.reviews')})
             </span>
           </div>
           <span className="text-xs text-gray-500">
-            {store.productCount} products
+            {store.productCount} {t('store.products')}
           </span>
         </div>
       </CardContent>
