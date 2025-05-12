@@ -58,14 +58,13 @@ export const allProducts: Product[] = [
     storeId: "s2",
     storeName: "EcoThreads",
     rating: 4.5,
-    isNew: false,
+    isNew: true,
     isFeatured: true,
     category: "Fashion",
-    description: "Sustainable cotton t-shirt",
+    description: "Made from 100% organic cotton sourced from sustainable farms. This t-shirt is soft, breathable, and perfect for everyday wear. Available in various colors and sizes.",
     stock: 78,
     reviews: 16
   },
-  // Add more products as needed
   {
     id: "p3",
     name: "Handmade Leather Wallet",
@@ -79,9 +78,94 @@ export const allProducts: Product[] = [
     isNew: false,
     isFeatured: true,
     category: "Accessories",
-    description: "Handmade leather wallet",
+    description: "This genuine leather wallet is handcrafted by master artisans using traditional techniques. Features multiple card slots, a bill compartment, and a coin pocket. Will develop a beautiful patina over time.",
+    material: "Full-grain leather",
     stock: 32,
     reviews: 42
+  },
+  {
+    id: "p4",
+    name: "Authentic Curry Spice Mix",
+    price: 12.99,
+    image: "https://images.unsplash.com/photo-1596040033249-a7c412756d10?ixlib=rb-4.0.3",
+    currency: "USD",
+    storeId: "s4",
+    storeName: "Global Spices",
+    rating: 4.9,
+    isNew: true,
+    isFeatured: true,
+    category: "Food",
+    description: "A premium blend of authentic spices sourced directly from small farmers in Kerala, India. Perfect for creating delicious curries with depth and complexity of flavor.",
+    origin: "Kerala, India",
+    stock: 65,
+    reviews: 28
+  },
+  {
+    id: "p5",
+    name: "Wireless Earbuds with Charging Case",
+    price: 79.99,
+    oldPrice: 99.99,
+    image: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?ixlib=rb-4.0.3",
+    currency: "USD",
+    storeId: "s5",
+    storeName: "Tech Innovations",
+    rating: 4.6,
+    isNew: true,
+    isFeatured: true,
+    category: "Electronics",
+    description: "High-quality wireless earbuds with active noise cancellation, touch controls, and up to 30 hours of battery life with the included charging case. Sweat and water-resistant for workouts.",
+    stock: 42,
+    reviews: 53
+  },
+  {
+    id: "p6",
+    name: "Hand-Painted Ceramic Mug",
+    price: 18.50,
+    image: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?ixlib=rb-4.0.3",
+    currency: "USD",
+    storeId: "s1",
+    storeName: "Sarah's Crafts",
+    rating: 4.7,
+    isNew: false,
+    isFeatured: true,
+    category: "Home & Decor",
+    description: "Each mug is individually hand-painted with non-toxic, food-safe glazes. Microwave and dishwasher safe. Makes a unique and thoughtful gift.",
+    material: "Ceramic",
+    stock: 23,
+    reviews: 19
+  },
+  {
+    id: "p7",
+    name: "Sustainable Bamboo Toothbrush Set",
+    price: 14.99,
+    image: "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?ixlib=rb-4.0.3",
+    currency: "USD",
+    storeId: "s2",
+    storeName: "EcoThreads",
+    rating: 4.4,
+    isNew: true,
+    isFeatured: false,
+    category: "Beauty",
+    description: "Pack of four bamboo toothbrushes with charcoal-infused bristles. 100% biodegradable handles help reduce plastic waste. Comes in plastic-free packaging.",
+    stock: 98,
+    reviews: 31
+  },
+  {
+    id: "p8",
+    name: "Artisanal Leather Journal",
+    price: 35.00,
+    image: "https://images.unsplash.com/photo-1531346680077-ccb2f5d5cb10?ixlib=rb-4.0.3",
+    currency: "USD",
+    storeId: "s3",
+    storeName: "Leather Artisan",
+    rating: 4.8,
+    isNew: true,
+    isFeatured: false,
+    category: "Accessories",
+    description: "Handbound leather journal with 192 pages of acid-free paper. Features a leather wrap closure with a rustic metal button. Perfect for sketching, journaling, or as a travel diary.",
+    material: "Buffalo leather, cotton paper",
+    stock: 17,
+    reviews: 22
   }
 ];
 
@@ -101,4 +185,10 @@ export const getProductsByCategory = (categoryName: string) => {
 
 export const getProductsByStore = (storeId: string) => {
   return allProducts.filter(product => product.storeId === storeId);
+};
+
+export const getNewArrivals = (limit = 4) => {
+  return allProducts
+    .filter(product => product.isNew)
+    .slice(0, limit);
 };
