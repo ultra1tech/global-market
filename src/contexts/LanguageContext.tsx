@@ -12,6 +12,11 @@ interface LanguageContextType {
   availableLanguages: typeof availableLanguages;
 }
 
+// Define translation object type more precisely
+interface TranslationObject {
+  [key: string]: string | TranslationObject;
+}
+
 // Create the context with a default value
 const LanguageContext = createContext<LanguageContextType>({
   language: 'en',
@@ -48,14 +53,14 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   // Function to get translation for a key
   const t = (key: string): string => {
     const keys = key.split('.');
-    let result = translations[language];
+    let result: string | TranslationObject = translations[language];
     
     for (const k of keys) {
       if (result && typeof result === 'object' && k in result) {
         result = result[k];
       } else {
         // Fallback to English if translation not found
-        let fallback = translations.en;
+        let fallback: string | TranslationObject = translations.en;
         for (const fk of keys) {
           if (fallback && typeof fallback === 'object' && fk in fallback) {
             fallback = fallback[fk];

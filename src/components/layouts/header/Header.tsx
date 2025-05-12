@@ -26,11 +26,6 @@ const Header: React.FC = () => {
     }
   };
 
-  const handleCurrencyChange = (currency: string) => {
-    // This would trigger a re-render of price components in a real app
-    // For now, it just updates localStorage (handled in CurrencySwitcher)
-  };
-
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
       <div className="marketplace-container">
@@ -80,10 +75,7 @@ const Header: React.FC = () => {
             {/* Language & Currency Switchers (Desktop) */}
             <div className="hidden md:flex items-center space-x-2 mr-2">
               <LanguageSwitcher size="icon" />
-              <CurrencySwitcher
-                size="icon"
-                onCurrencyChange={handleCurrencyChange}
-              />
+              <CurrencySwitcher size="icon" />
             </div>
           
             {/* Cart Button */}

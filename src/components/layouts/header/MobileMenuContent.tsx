@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Search, LogIn, User } from "lucide-react";
@@ -68,7 +67,7 @@ const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
       {/* Language & Currency Switches */}
       <div className="flex space-x-2 mb-4">
         <LanguageSwitcher size="sm" />
-        <CurrencySwitcher size="sm" onCurrencyChange={() => {}} />
+        <CurrencySwitcher size="sm" />
       </div>
       
       {/* Mobile Nav Links */}
