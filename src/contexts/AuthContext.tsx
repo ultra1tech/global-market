@@ -163,7 +163,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // For Mock Users (can be removed once Supabase is fully set up)
   const mockLogin = async (email: string, password: string) => {
-    // Check if Supabase is configured
+    // Check if Supabase is configured - get the URL and key from the imported supabase client
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+    
     if (supabase && supabaseUrl && supabaseAnonKey) {
       return login(email, password);
     }
