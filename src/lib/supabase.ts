@@ -1,12 +1,46 @@
-
 import { createClient } from '@supabase/supabase-js'
 import { Product } from '@/mocks/productsData';
 
-// Replace these with your actual Supabase URL and key once you have them
+// Check if Supabase environment variables are available
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Create a mock Supabase client when credentials are not available
+const createSupabaseClient = () => {
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.warn('Supabase credentials not found. Using mock client.');
+    // Return a mock client that implements the basic interface but doesn't make actual API calls
+    return {
+      auth: {
+        signUp: async () => ({ data: null, error: new Error('Mock client: Supabase not configured') }),
+        signInWithPassword: async () => ({ data: null, error: new Error('Mock client: Supabase not configured') }),
+        signOut: async () => ({ error: null }),
+        getSession: async () => ({ data: { session: null } }),
+        onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
+        getUser: async () => ({ data: { user: null } }),
+      },
+      from: () => ({
+        select: () => ({
+          eq: () => ({
+            single: async () => ({ data: null, error: new Error('Mock client: Supabase not configured') }),
+          }),
+          order: () => ({ data: null, error: new Error('Mock client: Supabase not configured') }),
+        }),
+      }),
+      storage: {
+        from: () => ({
+          upload: async () => ({ data: null, error: new Error('Mock client: Supabase not configured') }),
+          getPublicUrl: () => ({ data: { publicUrl: '' } }),
+        }),
+      },
+    };
+  }
+  
+  // Create actual Supabase client when credentials are available
+  return createClient(supabaseUrl, supabaseAnonKey);
+};
+
+export const supabase = createSupabaseClient();
 
 // Auth functions
 export const signUp = async (email: string, password: string, userData: any) => {
