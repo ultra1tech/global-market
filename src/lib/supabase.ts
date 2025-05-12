@@ -21,14 +21,13 @@ const createSupabaseClient = () => {
         getUser: async () => ({ data: { user: null } }),
       },
       from: () => ({
-        select: () => ({
+        select: (columns, options) => ({
           eq: () => ({
             single: async () => ({ data: null, error: new Error('Mock client: Supabase not configured') }),
+            count: options?.count ? 0 : undefined,
           }),
           order: () => ({ data: null, error: new Error('Mock client: Supabase not configured') }),
-          count: (column, options) => ({
-            eq: () => ({ data: null, count: 0, error: new Error('Mock client: Supabase not configured') }),
-          }),
+          count: async () => ({ count: 0, error: new Error('Mock client: Supabase not configured') }),
         }),
       }),
       storage: {
@@ -118,12 +117,14 @@ export const fetchProductById = async (id: string) => {
   // Use a try-catch block to handle potential mock client errors
   let reviewCount = 0;
   try {
-    const { count } = await supabase
+    // Using count method directly for better type safety
+    const reviewQuery = await supabase
       .from('reviews')
       .select('*', { count: 'exact' })
-      .eq('product_id', id);
+      .eq('product_id', id)
+      .count();
       
-    reviewCount = count || 0;
+    reviewCount = reviewQuery?.count || 0;
   } catch (e) {
     console.warn('Error fetching review count:', e);
   }
