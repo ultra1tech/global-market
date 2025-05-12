@@ -30,30 +30,6 @@ const createSupabaseClient = () => {
             eq: () => ({ data: null, count: 0, error: new Error('Mock client: Supabase not configured') }),
           }),
         }),
-        // Add support for count method directly
-        select: (columns, options) => {
-          const selectObj = {
-            eq: () => ({
-              single: async () => ({ data: null, error: new Error('Mock client: Supabase not configured') }),
-            }),
-            order: () => ({ data: null, error: new Error('Mock client: Supabase not configured') }),
-          };
-          
-          // If options include count parameter, add count method/property
-          if (options && options.count) {
-            return {
-              ...selectObj,
-              eq: () => ({
-                ...selectObj.eq(),
-                count: 0,
-              }),
-              head: true,
-              count: 0,
-            };
-          }
-          
-          return selectObj;
-        },
       }),
       storage: {
         from: () => ({
@@ -102,11 +78,7 @@ export const signOut = async () => {
 export const fetchProducts = async () => {
   const { data, error } = await supabase
     .from('products')
-    .select(`
-      *,
-      stores(name),
-      product_images(url, is_primary)
-    `)
+    .select('*')
     .order('created_at', { ascending: false });
 
   if (error) throw error;
@@ -136,11 +108,7 @@ export const fetchProducts = async () => {
 export const fetchProductById = async (id: string) => {
   const { data, error } = await supabase
     .from('products')
-    .select(`
-      *,
-      stores(id, name),
-      product_images(url, is_primary)
-    `)
+    .select('*')
     .eq('id', id)
     .single();
 
@@ -150,12 +118,12 @@ export const fetchProductById = async (id: string) => {
   // Use a try-catch block to handle potential mock client errors
   let reviewCount = 0;
   try {
-    const countResult = await supabase
+    const { count } = await supabase
       .from('reviews')
-      .select('*', { count: 'exact', head: true })
+      .select('*', { count: 'exact' })
       .eq('product_id', id);
       
-    reviewCount = countResult.count || 0;
+    reviewCount = count || 0;
   } catch (e) {
     console.warn('Error fetching review count:', e);
   }
