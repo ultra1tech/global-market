@@ -12,7 +12,7 @@ interface LanguageContextType {
   setLanguage: (lang: string) => void;
   t: (key: string, options?: { [key: string]: any }) => string;
   direction: 'ltr' | 'rtl';
-  availableLanguages: { code: string; name: string }[];
+  availableLanguages: { code: string; name: string; flag: string }[];
 }
 
 // Create the context
@@ -25,15 +25,15 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     return localStorage.getItem('baw_language') || 'en';
   });
 
-  // Define available languages
+  // Define available languages with flag emojis
   const availableLanguages = [
-    { code: 'en', name: 'English' },
-    { code: 'fr', name: 'Français' },
-    { code: 'es', name: 'Español' },
-    { code: 'ar', name: 'العربية' },
-    { code: 'zh', name: '中文' },
-    { code: 'pt', name: 'Português' },
-    { code: 'sw', name: 'Kiswahili' }
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷' },
+    { code: 'es', name: 'Español', flag: '🇪🇸' },
+    { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+    { code: 'zh', name: '中文', flag: '🇨🇳' },
+    { code: 'pt', name: 'Português', flag: '🇧🇷' },
+    { code: 'sw', name: 'Kiswahili', flag: '🇰🇪' }
   ];
 
   // Determine text direction based on language

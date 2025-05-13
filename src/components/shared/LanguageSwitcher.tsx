@@ -37,7 +37,7 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
         {availableLanguages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
-            onClick={() => setLanguage(lang.code as any)}
+            onClick={() => setLanguage(lang.code)}
             className="flex items-center justify-between"
           >
             <span>
