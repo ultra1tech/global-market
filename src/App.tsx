@@ -16,6 +16,7 @@ import OrdersPage from './pages/admin/OrdersPage'
 import PaymentsPage from './pages/admin/PaymentsPage'
 import SellersPage from './pages/admin/SellersPage'
 import Stores from './pages/Stores'
+import StoreDetail from './pages/StoreDetail'
 import WishlistPage from './pages/buyer/WishlistPage'
 import { WishlistProvider } from './contexts/WishlistContext'
 
@@ -40,6 +41,7 @@ function App() {
           <Route path="/admin/payments" element={<PaymentsPage />} />
           <Route path="/admin/sellers" element={<SellersPage />} />
           <Route path="/stores" element={<Stores />} />
+          <Route path="/stores/:id" element={<StoreDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Toaster richColors />
