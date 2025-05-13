@@ -23,6 +23,7 @@ function App() {
   return (
     <BrowserRouter>
       <WishlistProvider>
+        {/* Routes stay the same */}
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />

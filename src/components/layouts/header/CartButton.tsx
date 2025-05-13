@@ -1,16 +1,30 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { formatCurrency } from "@/utils/formatters";
+import { useCurrency } from "@/contexts/CurrencyContext";
+import { Badge } from "@/components/ui/badge";
 
 const CartButton: React.FC = () => {
   const { totalItems, totalPrice } = useCart();
   const { t } = useLanguage();
+  const { formatPrice } = useCurrency();
+  const [animated, setAnimated] = useState(false);
   
+  // Animation effect when cart items change
+  useEffect(() => {
+    if (totalItems > 0) {
+      setAnimated(true);
+      const timer = setTimeout(() => setAnimated(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [totalItems]);
+
   return (
     <TooltipProvider>
       <Tooltip>
@@ -19,9 +33,10 @@ const CartButton: React.FC = () => {
             <Link to="/cart" className="relative">
               <ShoppingCart size={20} />
               {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-marketplace-primary text-white text-xs font-semibold rounded-full h-5 w-5 flex items-center justify-center">
+                <Badge 
+                  className={`absolute -top-1 -right-1 bg-marketplace-primary text-white text-xs font-semibold min-h-5 min-w-5 flex items-center justify-center p-0 ${animated ? 'scale-110' : ''} transition-transform`}>
                   {totalItems > 99 ? '99+' : totalItems}
-                </span>
+                </Badge>
               )}
               <span className="sr-only">{t('common.cart')}</span>
             </Link>
@@ -29,9 +44,14 @@ const CartButton: React.FC = () => {
         </TooltipTrigger>
         <TooltipContent>
           {totalItems > 0 ? (
-            <p>
-              {t('cart.itemsInCart', { count: totalItems })}
-            </p>
+            <div className="text-sm">
+              <p className="font-medium">
+                {t('cart.itemsInCart', { count: totalItems })}
+              </p>
+              <p className="text-muted-foreground mt-1">
+                {t('cart.total')}: {formatPrice(totalPrice)}
+              </p>
+            </div>
           ) : (
             <p>{t('cart.empty')}</p>
           )}
