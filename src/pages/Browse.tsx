@@ -6,13 +6,30 @@ import { Button } from "@/components/ui/button";
 import { allProducts } from '@/mocks/productsData';
 import MainLayout from '@/components/layouts/MainLayout';
 import { Input } from '@/components/ui/input';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Browse = () => {
   const [searchParams] = useSearchParams();
   const categoryParam = searchParams.get('category');
   const searchQuery = searchParams.get('search') || '';
+  const { t } = useLanguage();
   
   const [searchTerm, setSearchTerm] = useState(searchQuery);
+  
+  // Get category display name
+  const getCategoryDisplayName = (slug: string) => {
+    const categoryMap: Record<string, string> = {
+      'fashion': 'categories.fashion',
+      'electronics': 'categories.electronics',
+      'home-decor': 'categories.homeDecor',
+      'beauty': 'categories.beauty',
+      'food': 'categories.food',
+      'crafts': 'categories.crafts',
+      'accessories': 'categories.accessories'
+    };
+    
+    return categoryMap[slug] ? t(categoryMap[slug]) : slug.charAt(0).toUpperCase() + slug.slice(1);
+  };
   
   // Filter products based on category and search term
   const filteredProducts = allProducts.filter(product => {
@@ -35,18 +52,18 @@ const Browse = () => {
           <div>
             <h1 className="text-3xl font-bold mb-2">
               {categoryParam 
-                ? `${categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1)} Products` 
-                : 'All Products'}
+                ? `${getCategoryDisplayName(categoryParam)} ${t('common.products')}`
+                : t('categories.all')}
             </h1>
             <p className="text-gray-500">
-              {filteredProducts.length} products found
+              {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'} found
             </p>
           </div>
           
           <div className="mt-4 md:mt-0 w-full md:w-auto">
             <Input
               type="text"
-              placeholder="Search products..."
+              placeholder={t('common.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full md:w-64"
@@ -56,9 +73,9 @@ const Browse = () => {
         
         {filteredProducts.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-xl mb-4">No products found</p>
+            <p className="text-xl mb-4">{t('product.notFound')}</p>
             <Button asChild>
-              <Link to="/products">View All Products</Link>
+              <Link to="/browse">{t('product.browseProducts')}</Link>
             </Button>
           </div>
         ) : (
@@ -77,7 +94,7 @@ const Browse = () => {
                     <h3 className="font-semibold text-md line-clamp-2">{product.name}</h3>
                     <span className="font-bold text-marketplace-primary">${product.price.toFixed(2)}</span>
                   </div>
-                  <p className="text-gray-500 text-xs mb-4 line-clamp-2">{product.description || "A unique product on our global marketplace"}</p>
+                  <p className="text-gray-500 text-xs mb-4 line-clamp-2">{product.description || t('product.noDescription')}</p>
                   <div className="flex justify-between items-center">
                     <Link to={`/stores/${product.storeId}`} className="text-xs text-gray-500 hover:underline">
                       {product.storeName}
@@ -93,7 +110,7 @@ const Browse = () => {
                     asChild
                     size="sm"
                   >
-                    <Link to={`/products/${product.id}`}>View Details</Link>
+                    <Link to={`/products/${product.id}`}>{t('product.viewDetails') || 'View Details'}</Link>
                   </Button>
                 </CardContent>
               </Card>

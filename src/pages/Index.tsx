@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import MainLayout from '@/components/layouts/MainLayout';
@@ -18,10 +17,13 @@ import {
   CarouselPrevious
 } from "@/components/ui/carousel";
 import { ShoppingBag, ChevronRight, Globe } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Index = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { t } = useLanguage();
+  
   const featuredProducts = allProducts.filter(product => product.isFeatured).slice(0, 8);
   const newArrivals = allProducts.filter(product => product.isNew).slice(0, 8);
   const featuredStores = storeData.slice(0, 5);
@@ -51,14 +53,14 @@ const Index = () => {
   };
 
   const categories = [
-    { name: "Fashion", icon: "/icons/fashion.svg", path: "/browse?category=fashion" },
-    { name: "Beauty", icon: "/icons/beauty.svg", path: "/browse?category=beauty" },
-    { name: "Crafts", icon: "/icons/crafts.svg", path: "/browse?category=crafts" },
-    { name: "Food", icon: "/icons/food.svg", path: "/browse?category=food" },
-    { name: "Electronics", icon: "/icons/electronics.svg", path: "/browse?category=electronics" },
-    { name: "Home Decor", icon: "/icons/home-decor.svg", path: "/browse?category=home-decor" },
-    { name: "Accessories", icon: "/icons/accessories.svg", path: "/browse?category=accessories" },
-    { name: "All Categories", icon: "/icons/all.svg", path: "/browse" }
+    { nameKey: "categories.fashion", icon: "/icons/fashion.svg", path: "/browse?category=fashion" },
+    { nameKey: "categories.beauty", icon: "/icons/beauty.svg", path: "/browse?category=beauty" },
+    { nameKey: "categories.crafts", icon: "/icons/crafts.svg", path: "/browse?category=crafts" },
+    { nameKey: "categories.food", icon: "/icons/food.svg", path: "/browse?category=food" },
+    { nameKey: "categories.electronics", icon: "/icons/electronics.svg", path: "/browse?category=electronics" },
+    { nameKey: "categories.homeDecor", icon: "/icons/home-decor.svg", path: "/browse?category=home-decor" },
+    { nameKey: "categories.accessories", icon: "/icons/accessories.svg", path: "/browse?category=accessories" },
+    { nameKey: "categories.all", icon: "/icons/all.svg", path: "/browse" }
   ];
 
   return (
@@ -124,14 +126,14 @@ const Index = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
             {categories.map((category) => (
               <Link 
-                key={category.name}
+                key={category.nameKey}
                 to={category.path}
                 className="group bg-gray-50 hover:bg-gray-100 rounded-xl p-6 text-center transition-all duration-300 flex flex-col items-center"
               >
                 <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
                   <img 
                     src={category.icon} 
-                    alt={category.name} 
+                    alt={t(category.nameKey)} 
                     className="w-8 h-8 text-marketplace-primary"
                     onError={(e) => {
                       // Fallback if icon doesn't load
@@ -140,7 +142,7 @@ const Index = () => {
                   />
                 </div>
                 <h3 className="font-medium text-lg group-hover:text-marketplace-primary transition-colors">
-                  {category.name}
+                  {t(category.nameKey)}
                 </h3>
               </Link>
             ))}

@@ -15,13 +15,13 @@ const DesktopNavigation: React.FC = () => {
   
   // Categories with translation keys
   const categories = [
-    { nameKey: "home.categories.fashion", path: "/browse?category=fashion" },
-    { nameKey: "home.categories.electronics", path: "/browse?category=electronics" },
-    { nameKey: "home.categories.homeDecor", path: "/browse?category=home-decor" },
-    { nameKey: "home.categories.beauty", path: "/browse?category=beauty" },
-    { nameKey: "home.categories.food", path: "/browse?category=food" },
-    { nameKey: "home.categories.crafts", path: "/browse?category=crafts" },
-    { nameKey: "home.categories.accessories", path: "/browse?category=accessories" },
+    { nameKey: "categories.fashion", path: "/browse?category=fashion" },
+    { nameKey: "categories.electronics", path: "/browse?category=electronics" },
+    { nameKey: "categories.homeDecor", path: "/browse?category=home-decor" },
+    { nameKey: "categories.beauty", path: "/browse?category=beauty" },
+    { nameKey: "categories.food", path: "/browse?category=food" },
+    { nameKey: "categories.crafts", path: "/browse?category=crafts" },
+    { nameKey: "categories.accessories", path: "/browse?category=accessories" },
   ];
 
   return (

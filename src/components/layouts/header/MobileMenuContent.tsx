@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Search, LogIn, User, Heart } from "lucide-react";
@@ -46,13 +45,13 @@ const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
 
   // Use translated category names with their paths
   const categories = [
-    { nameKey: "home.categories.fashion", path: "/browse?category=fashion" },
-    { nameKey: "home.categories.electronics", path: "/browse?category=electronics" },
-    { nameKey: "home.categories.homeDecor", path: "/browse?category=home-decor" },
-    { nameKey: "home.categories.beauty", path: "/browse?category=beauty" },
-    { nameKey: "home.categories.accessories", path: "/browse?category=accessories" },
-    { nameKey: "home.categories.food", path: "/browse?category=food" },
-    { nameKey: "home.categories.crafts", path: "/browse?category=crafts" },
+    { nameKey: "categories.fashion", path: "/browse?category=fashion" },
+    { nameKey: "categories.electronics", path: "/browse?category=electronics" },
+    { nameKey: "categories.homeDecor", path: "/browse?category=home-decor" },
+    { nameKey: "categories.beauty", path: "/browse?category=beauty" },
+    { nameKey: "categories.accessories", path: "/browse?category=accessories" },
+    { nameKey: "categories.food", path: "/browse?category=food" },
+    { nameKey: "categories.crafts", path: "/browse?category=crafts" },
   ];
 
   return (

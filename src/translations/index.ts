@@ -14,12 +14,24 @@ const translations = {
       register: "Register",
       logout: "Logout",
       search: "Search",
+      searchPlaceholder: "Search for products...",
       settings: "Settings",
       dashboard: "Dashboard",
       account: "Account",
       backToProducts: "Back to Products",
       cart: "Cart",
-      wishlist: "Wishlist"
+      wishlist: "Wishlist",
+      categories: "Categories"
+    },
+    categories: {
+      fashion: "Fashion",
+      electronics: "Electronics",
+      homeDecor: "Home Decor",
+      beauty: "Beauty",
+      food: "Food & Drinks",
+      crafts: "Crafts",
+      accessories: "Accessories",
+      all: "All Categories"
     },
     nav: {
       categories: "Categories",
@@ -129,12 +141,24 @@ const translations = {
       register: "S'inscrire",
       logout: "Déconnexion",
       search: "Rechercher",
+      searchPlaceholder: "Rechercher des produits...",
       settings: "Paramètres",
       dashboard: "Tableau de bord",
       account: "Compte",
       backToProducts: "Retour aux produits",
       cart: "Panier",
-      wishlist: "Liste d'envies"
+      wishlist: "Liste d'envies",
+      categories: "Catégories"
+    },
+    categories: {
+      fashion: "Mode",
+      electronics: "Électroniques",
+      homeDecor: "Décoration intérieure",
+      beauty: "Beauté",
+      food: "Nourriture & Boissons",
+      crafts: "Artisanat",
+      accessories: "Accessoires",
+      all: "Toutes les catégories"
     },
     nav: {
       categories: "Catégories",
@@ -196,7 +220,6 @@ const translations = {
       removed: "retiré de la liste d'envies"
     }
   },
-  // Other languages follow the same pattern...
   es: {
     common: {
       marketplace: "Mercado",
@@ -210,12 +233,24 @@ const translations = {
       register: "Registrarse",
       logout: "Cerrar sesión",
       search: "Buscar",
+      searchPlaceholder: "Buscar productos...",
       settings: "Configuración",
       dashboard: "Tablero de control",
       account: "Cuenta",
       backToProducts: "Volver a los productos",
       cart: "Carrito",
-      wishlist: "Lista de deseos"
+      wishlist: "Lista de deseos",
+      categories: "Categorías"
+    },
+    categories: {
+      fashion: "Moda",
+      electronics: "Electrónicos",
+      homeDecor: "Decoración del hogar",
+      beauty: "Belleza",
+      food: "Comida y bebidas",
+      crafts: "Artesanías",
+      accessories: "Accesorios",
+      all: "Todas las categorías"
     },
     nav: {
       categories: "Categorías",
@@ -325,12 +360,24 @@ const translations = {
       register: "تسجيل",
       logout: "تسجيل الخروج",
       search: "بحث",
+      searchPlaceholder: "ابحث عن المنتجات...",
       settings: "إعدادات",
       dashboard: "لوحة التحكم",
       account: "حساب",
       backToProducts: "العودة إلى المنتجات",
       cart: "السلة",
-      wishlist: "قائمة الرغبات"
+      wishlist: "قائمة الرغبات",
+      categories: "فئات"
+    },
+    categories: {
+      fashion: "أزياء",
+      electronics: "إلكترونيات",
+      homeDecor: "ديكور منزلي",
+      beauty: "الجمال",
+      food: "طعام وشراب",
+      crafts: "حرف يدوية",
+      accessories: "إكسسوارات",
+      all: "جميع الفئات"
     },
     nav: {
       categories: "فئات",
@@ -440,12 +487,24 @@ const translations = {
       register: "注册",
       logout: "注销",
       search: "搜索",
+      searchPlaceholder: "搜索产品...",
       settings: "设置",
       dashboard: "仪表盘",
       account: "账户",
       backToProducts: "返回产品",
       cart: "购物车",
-      wishlist: "收藏列表"
+      wishlist: "收藏列表",
+      categories: "分类"
+    },
+    categories: {
+      fashion: "时尚",
+      electronics: "电子产品",
+      homeDecor: "家居装饰",
+      beauty: "美容",
+      food: "食品和饮料",
+      crafts: "工艺品",
+      accessories: "配件",
+      all: "所有类别"
     },
     nav: {
       categories: "分类",
@@ -555,12 +614,24 @@ const translations = {
       register: "Cadastrar",
       logout: "Sair",
       search: "Pesquisar",
+      searchPlaceholder: "Pesquisar produtos...",
       settings: "Configurações",
       dashboard: "Painel de Controle",
       account: "Conta",
       backToProducts: "Voltar aos Produtos",
       cart: "Carrinho",
-      wishlist: "Lista de Desejos"
+      wishlist: "Lista de Desejos",
+      categories: "Categorias"
+    },
+    categories: {
+      fashion: "Moda",
+      electronics: "Eletrônicos",
+      homeDecor: "Decoração",
+      beauty: "Beleza",
+      food: "Comida e Bebida",
+      crafts: "Artesanato",
+      accessories: "Acessórios",
+      all: "Todas as Categorias"
     },
     nav: {
       categories: "Categorias",
@@ -670,14 +741,26 @@ const translations = {
       register: "Jisajili",
       logout: "Kufuata",
       search: "Tafuta",
+      searchPlaceholder: "Tafuta bidhaa...",
       settings: "Majina",
       dashboard: "Tabia ya Kuhusu",
       account: "Hesabu",
       backToProducts: "Kuwa Kuhusu Bidhaa",
       cart: "Gari",
-      wishlist: "Orodha ya Matamanio"
+      wishlist: "Orodha ya Matamanio",
+      categories: "Jamii"
     },
-    nav: {
+    categories: {
+      fashion: "Mitindo",
+      electronics: "Elektroniki",
+      homeDecor: "Mapambo ya Nyumbani",
+      beauty: "Urembo",
+      food: "Chakula na Vinywaji",
+      crafts: "Sanaa ya Mikono",
+      accessories: "Vifaa",
+      all: "Jamii Zote"
+    },
+     nav: {
       categories: "Jamii",
       deals: "Kufanya Kwa Dhaula",
       trending: "Tendanisho",
