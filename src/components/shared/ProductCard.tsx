@@ -10,6 +10,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import WishlistButton from './WishlistButton';
 import { ShoppingCart } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface ProductCardProps {
   product: Product;
@@ -28,12 +29,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
     e.preventDefault();
     e.stopPropagation();
     addItem(product);
+    toast(`${product.name} ${t('cart.added')}`);
   };
   
   return (
     <Card className="overflow-hidden group transition-all hover:shadow-lg h-full flex flex-col">
-      <Link to={`/products/${product.id}`} className="flex-1 flex flex-col">
-        <div className="relative h-52 overflow-hidden">
+      <div className="flex-1 flex flex-col">
+        <Link to={`/product/${product.id}`} className="relative h-52 overflow-hidden">
           <img 
             src={product.image} 
             alt={product.name}
@@ -52,7 +54,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               {t('product.sale')}
             </Badge>
           )}
-        </div>
+        </Link>
         <CardContent className="p-4 flex-1 flex flex-col">
           <div className="flex-1">
             <Link to={`/stores/${product.storeId}`} className="block">
@@ -60,9 +62,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 {product.storeName}
               </p>
             </Link>
-            <h3 className="font-medium text-base mt-1 line-clamp-2">
-              {product.name}
-            </h3>
+            <Link to={`/product/${product.id}`} className="block">
+              <h3 className="font-medium text-base mt-1 line-clamp-2 hover:text-marketplace-primary">
+                {product.name}
+              </h3>
+            </Link>
             <div className="flex items-baseline mt-2">
               <span className="font-bold text-marketplace-primary">
                 {formatPrice(product.price)}
@@ -93,7 +97,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </div>
           )}
         </CardContent>
-      </Link>
+      </div>
     </Card>
   );
 };

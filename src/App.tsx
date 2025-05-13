@@ -1,6 +1,6 @@
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "sonner"
 import Index from './pages/Index'
 import NotFound from './pages/NotFound'
 import Login from './pages/Login'
@@ -29,6 +29,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/browse" element={<Browse />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/seller-dashboard/*" element={<SellerDashboard />} />

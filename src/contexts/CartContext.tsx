@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 // Define the product structure that matches our data
 interface Product {
@@ -80,9 +80,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const updatedItems = [...prevItems];
         updatedItems[existingItemIndex].quantity += quantity;
         
-        toast({
-          description: `Updated ${product.name} quantity in cart`,
-        });
+        toast(`Updated ${product.name} quantity in cart`);
         
         return updatedItems;
       } else {
@@ -98,9 +96,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
           storeName: product.storeName,
         };
         
-        toast({
-          description: `${product.name} added to cart`,
-        });
+        toast(`${product.name} added to cart`);
         
         return [...prevItems, newItem];
       }
@@ -114,9 +110,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setItems((prevItems) => {
       const itemToRemove = prevItems.find(item => item.id === itemId);
       if (itemToRemove) {
-        toast({
-          description: `${itemToRemove.name} removed from cart`,
-        });
+        toast(`${itemToRemove.name} removed from cart`);
       }
       return prevItems.filter((item) => item.id !== itemId);
     });
@@ -125,18 +119,23 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const updateQuantity = (itemId: string, quantity: number) => {
     if (quantity < 1) return;
     
-    setItems((prevItems) => 
-      prevItems.map((item) => 
+    setItems((prevItems) => {
+      const updatedItems = prevItems.map((item) => 
         item.id === itemId ? { ...item, quantity } : item
-      )
-    );
+      );
+      
+      const updatedItem = updatedItems.find(item => item.id === itemId);
+      if (updatedItem) {
+        toast(`${updatedItem.name} quantity updated to ${quantity}`);
+      }
+      
+      return updatedItems;
+    });
   };
   
   const clearCart = () => {
     setItems([]);
-    toast({
-      description: "Cart cleared",
-    });
+    toast("Cart cleared");
   };
   
   return (
