@@ -8,7 +8,9 @@ export interface WishlistItem {
   name: string;
   price: number;
   image: string;
-  store: string;
+  store?: string;
+  storeId?: string;
+  storeName?: string;
 }
 
 // Define the context type

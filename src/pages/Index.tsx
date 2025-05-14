@@ -32,10 +32,11 @@ const Index = () => {
     toast({
       title: "Welcome to B.A.W. Marketplace",
       description: "Discover unique products from sellers around the world.",
-      action: {
-        label: t('product.browseProducts'),
-        onClick: () => navigate("/browse")
-      }
+      action: (
+        <Button variant="outline" size="sm" onClick={() => navigate("/browse")}>
+          {t('product.browseProducts')}
+        </Button>
+      )
     });
   };
 
