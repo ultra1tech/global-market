@@ -5,13 +5,15 @@ import MainLayout from '@/components/layouts/MainLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 import { useCart } from '@/contexts/CartContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Trash, ShoppingCart, ArrowRight, ShoppingBag, RefreshCw } from 'lucide-react';
 
 const Cart = () => {
   const navigate = useNavigate();
   const { items, totalItems, totalPrice, updateQuantity, removeItem, clearCart } = useCart();
+  const { t } = useLanguage();
 
   // Function to handle quantity updates
   const handleQuantityChange = (itemId: string, newQuantity: number) => {
@@ -24,7 +26,8 @@ const Cart = () => {
       <div className="container mx-auto py-8 px-4">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold flex items-center">
-            <ShoppingCart className="mr-2 h-6 w-6" /> Your Cart {totalItems > 0 && `(${totalItems} ${totalItems === 1 ? 'item' : 'items'})`}
+            <ShoppingCart className="mr-2 h-6 w-6" /> 
+            {t('cart.yourCart')} {totalItems > 0 && `(${totalItems} ${totalItems === 1 ? t('cart.item') : t('cart.items')})`}
           </h1>
           {totalItems > 0 && (
             <Button 
@@ -33,11 +36,13 @@ const Cart = () => {
               className="text-red-500 hover:text-red-600"
               onClick={() => {
                 clearCart();
-                toast.info('Cart has been cleared');
+                toast({
+                  description: t('cart.cleared')
+                });
               }}
             >
               <Trash className="mr-2 h-4 w-4" />
-              Clear Cart
+              {t('cart.clearCart')}
             </Button>
           )}
         </div>
@@ -47,12 +52,12 @@ const Cart = () => {
           <Card className="text-center py-16">
             <CardContent>
               <ShoppingBag className="mx-auto h-16 w-16 text-gray-300 mb-4" />
-              <h2 className="text-xl font-semibold mb-2">Your cart is empty</h2>
+              <h2 className="text-xl font-semibold mb-2">{t('cart.empty')}</h2>
               <p className="text-muted-foreground mb-6">
-                Looks like you haven't added any products to your cart yet.
+                {t('cart.emptyMessage')}
               </p>
               <Button asChild>
-                <Link to="/browse">Browse Products</Link>
+                <Link to="/browse">{t('cart.continueShopping')}</Link>
               </Button>
             </CardContent>
           </Card>
@@ -62,7 +67,7 @@ const Cart = () => {
             <div className="lg:col-span-2">
               <Card>
                 <CardHeader className="pb-3">
-                  <CardTitle>Cart Items</CardTitle>
+                  <CardTitle>{t('cart.cartItems')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -79,7 +84,7 @@ const Cart = () => {
                           <div>
                             <h3 className="font-medium">{item.name}</h3>
                             <p className="text-sm text-muted-foreground">
-                              Sold by {item.storeName || 'Unknown Seller'}
+                              {t('cart.soldBy')} {item.storeName || t('cart.unknownSeller')}
                             </p>
                             <p className="text-sm font-medium">${item.price.toFixed(2)}</p>
                           </div>
@@ -111,10 +116,12 @@ const Cart = () => {
                               className="text-sm text-red-500 hover:text-red-600 flex items-center"
                               onClick={() => {
                                 removeItem(item.id);
-                                toast.success(`${item.name} removed from cart`);
+                                toast({
+                                  description: `${item.name} ${t('cart.removed')}`
+                                });
                               }}
                             >
-                              <Trash className="h-3 w-3 mr-1" /> Remove
+                              <Trash className="h-3 w-3 mr-1" /> {t('cart.remove')}
                             </button>
                           </div>
                         </div>
@@ -129,7 +136,7 @@ const Cart = () => {
                 <Button variant="outline" asChild>
                   <Link to="/browse">
                     <ArrowRight className="mr-2 h-4 w-4 rotate-180" />
-                    Continue Shopping
+                    {t('cart.continueShopping')}
                   </Link>
                 </Button>
               </div>
@@ -139,32 +146,32 @@ const Cart = () => {
             <div className="lg:col-span-1">
               <Card className="sticky top-20">
                 <CardHeader>
-                  <CardTitle>Order Summary</CardTitle>
+                  <CardTitle>{t('cart.orderSummary')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex justify-between">
-                      <span>Subtotal</span>
+                      <span>{t('cart.subtotal')}</span>
                       <span>${totalPrice.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Shipping</span>
-                      <span>Calculated at checkout</span>
+                      <span>{t('cart.shipping')}</span>
+                      <span>{t('cart.calculatedAtCheckout')}</span>
                     </div>
 
                     <Separator />
 
                     <div className="flex justify-between font-bold">
-                      <span>Total</span>
+                      <span>{t('cart.total')}</span>
                       <span>${totalPrice.toFixed(2)}</span>
                     </div>
 
                     <Button className="w-full" onClick={() => navigate('/checkout')}>
-                      Proceed to Checkout
+                      {t('cart.proceedToCheckout')}
                     </Button>
                     
                     <div className="flex items-center justify-center text-sm text-muted-foreground">
-                      <RefreshCw className="h-3 w-3 mr-2" /> Free 30-day returns
+                      <RefreshCw className="h-3 w-3 mr-2" /> {t('cart.freeReturn')}
                     </div>
                   </div>
                 </CardContent>

@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 
 const CartButton: React.FC = () => {
   const { totalItems, totalPrice } = useCart();
-  const { t } = useLanguage();
+  const { t, direction } = useLanguage();
   const { formatPrice } = useCurrency();
   const [animated, setAnimated] = useState(false);
   

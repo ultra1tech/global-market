@@ -1,5 +1,3 @@
-// Define translations for all languages supported in the app
-
 const translations = {
   en: {
     common: {
@@ -85,10 +83,14 @@ const translations = {
       onlyXLeft: "Only {count} left in stock",
       quantity: "Quantity",
       warrantyGuarantee: "30-Day Money-Back Guarantee",
-      deliveryEstimate: "Estimated delivery in {days} business days"
+      deliveryEstimate: "Estimated delivery in {days} business days",
+      viewDetails: "View Details",
+      singleItem: "product found",
+      multipleItems: "products found"
     },
     cart: {
       empty: "Your cart is empty",
+      emptyMessage: "Looks like you haven't added any products to your cart yet.",
       continueShopping: "Continue Shopping",
       itemsInCart: "{count} {count, plural, one {item} other {items}} in cart",
       subtotal: "Subtotal",
@@ -100,15 +102,31 @@ const translations = {
       added: "added to cart",
       removed: "removed from cart",
       updated: "quantity updated",
-      cleared: "Cart cleared"
+      cleared: "Cart cleared",
+      yourCart: "Your Cart",
+      item: "item",
+      items: "items",
+      clearCart: "Clear Cart",
+      cartItems: "Cart Items",
+      soldBy: "Sold by",
+      unknownSeller: "Unknown Seller",
+      remove: "Remove",
+      orderSummary: "Order Summary",
+      calculatedAtCheckout: "Calculated at checkout",
+      freeReturn: "Free 30-day returns"
     },
     wishlist: {
       empty: "Your wishlist is empty",
+      emptyTitle: "Your Wishlist is Empty",
+      emptyMessage: "Save items you like to your wishlist and they will appear here.",
       itemsInWishlist: "{count} items in wishlist",
       addToWishlist: "Add to wishlist",
       removeFromWishlist: "Remove from wishlist",
       added: "added to wishlist",
-      removed: "removed from wishlist"
+      removed: "removed from wishlist",
+      itemCount: "{count} {count, plural, one {item} other {items}} in wishlist",
+      clearAll: "Clear All",
+      continueShopping: "Browse Products"
     },
     store: {
       aboutSeller: "About Seller",
@@ -118,7 +136,13 @@ const translations = {
       followers: "Followers",
       following: "Following",
       follow: "Follow Store",
-      unfollow: "Unfollow"
+      unfollow: "Unfollow",
+      exploreStores: "Explore Stores",
+      discoverSellers: "Discover sellers from around the world",
+      searchPlaceholder: "Search for stores...",
+      noResults: "No stores found",
+      tryDifferentSearch: "Try a different search term",
+      unknownSeller: "Unknown Seller"
     },
     currency: {
       usd: "USD",
@@ -168,6 +192,24 @@ const translations = {
       sell: "Vendre",
       help: "Aide"
     },
+    auth: {
+      email: "Email",
+      password: "Mot de passe",
+      confirmPassword: "Confirmer le mot de passe",
+      forgotPassword: "Mot de passe oublié?",
+      loginTitle: "Bienvenue",
+      loginSubtitle: "Connectez-vous à votre compte",
+      registerTitle: "Créer un compte",
+      registerSubtitle: "Rejoignez notre marché",
+      loginBtn: "Se connecter",
+      registerBtn: "S'inscrire",
+      orContinueWith: "Ou continuer avec",
+      dontHaveAccount: "Vous n'avez pas de compte?",
+      alreadyHaveAccount: "Vous avez déjà un compte?",
+      createOne: "Créer un",
+      signIn: "Se connecter",
+      passwordRequirements: "Le mot de passe doit comporter au moins 8 caractères"
+    },
     product: {
       new: "Nouveau",
       sale: "Solde",
@@ -194,10 +236,14 @@ const translations = {
       onlyXLeft: "Seulement {count} en stock",
       quantity: "Quantité",
       warrantyGuarantee: "Garantie de remboursement de 30 jours",
-      deliveryEstimate: "Livraison estimée sous {days} jours ouvrables"
+      deliveryEstimate: "Livraison estimée sous {days} jours ouvrables",
+      viewDetails: "Voir les détails",
+      singleItem: "produit trouvé",
+      multipleItems: "produits trouvés"
     },
     cart: {
       empty: "Votre panier est vide",
+      emptyMessage: "Il semble que vous n'ayez ajouté aucun produit à votre panier.",
       continueShopping: "Continuer vos achats",
       itemsInCart: "{count} {count, plural, one {article} other {articles}} dans le panier",
       subtotal: "Sous-total",
@@ -209,15 +255,54 @@ const translations = {
       added: "ajouté au panier",
       removed: "retiré du panier",
       updated: "quantité mise à jour",
-      cleared: "Panier vidé"
+      cleared: "Panier vidé",
+      yourCart: "Votre panier",
+      item: "article",
+      items: "articles",
+      clearCart: "Vider le panier",
+      cartItems: "Articles du panier",
+      soldBy: "Vendu par",
+      unknownSeller: "Vendeur inconnu",
+      remove: "Retirer",
+      orderSummary: "Résumé de la commande",
+      calculatedAtCheckout: "Calculé à la caisse",
+      freeReturn: "Retours gratuits sous 30 jours"
     },
     wishlist: {
       empty: "Votre liste d'envies est vide",
+      emptyTitle: "Votre liste d'envies est vide",
+      emptyMessage: "Enregistrez les articles que vous aimez dans votre liste d'envies et ils apparaîtront ici.",
       itemsInWishlist: "{count} articles dans la liste d'envies",
       addToWishlist: "Ajouter à la liste d'envies",
       removeFromWishlist: "Retirer de la liste d'envies",
       added: "ajouté à la liste d'envies",
-      removed: "retiré de la liste d'envies"
+      removed: "retiré de la liste d'envies",
+      itemCount: "{count} {count, plural, one {article} other {articles}} dans la liste d'envies",
+      clearAll: "Tout effacer",
+      continueShopping: "Parcourir les produits"
+    },
+    store: {
+      aboutSeller: "À propos du vendeur",
+      contactSeller: "Contacter le vendeur",
+      sellerRating: "Évaluation du vendeur",
+      products: "Produits",
+      followers: "Abonnés",
+      following: "Suivant",
+      follow: "Suivre le magasin",
+      unfollow: "Ne plus suivre",
+      exploreStores: "Explorer les magasins",
+      discoverSellers: "Découvrez des vendeurs du monde entier",
+      searchPlaceholder: "Rechercher des magasins...",
+      noResults: "Aucun magasin trouvé",
+      tryDifferentSearch: "Essayez un terme de recherche différent",
+      unknownSeller: "Vendeur inconnu"
+    },
+    currency: {
+      usd: "USD",
+      eur: "EUR",
+      gbp: "GBP",
+      jpy: "JPY",
+      cny: "CNY"
     }
   },
   es: {
@@ -304,10 +389,14 @@ const translations = {
       onlyXLeft: "Sólo {count} en stock",
       quantity: "Cantidad",
       warrantyGuarantee: "Garantía de devolución de 30 días",
-      deliveryEstimate: "Estimación de entrega en {days} días laborables"
+      deliveryEstimate: "Estimación de entrega en {days} días laborables",
+      viewDetails: "Ver detalles",
+      singleItem: "producto encontrado",
+      multipleItems: "productos encontrados"
     },
     cart: {
       empty: "Tu carrito está vacío",
+      emptyMessage: "Tu carrito está vacío.",
       continueShopping: "Continuar comprando",
       itemsInCart: "{count} {count, plural, one {producto} other {productos}} en el carrito",
       subtotal: "Subtotal",
@@ -319,15 +408,31 @@ const translations = {
       added: "añadido al carrito",
       removed: "eliminado del carrito",
       updated: "cantidad actualizada",
-      cleared: "Carrito vaciado"
+      cleared: "Carrito vaciado",
+      yourCart: "Tu carrito",
+      item: "producto",
+      items: "productos",
+      clearCart: "Vaciar carrito",
+      cartItems: "Artículos en el carrito",
+      soldBy: "Vendido por",
+      unknownSeller: "Vendedor desconocido",
+      remove: "Eliminar",
+      orderSummary: "Resumen del pedido",
+      calculatedAtCheckout: "Calculado en el pago",
+      freeReturn: "Devoluciones gratuitas en 30 días"
     },
     wishlist: {
       empty: "Tu lista de deseos está vacía",
+      emptyTitle: "Tu lista de deseos está vacía",
+      emptyMessage: "Guarda los artículos que te gustan en tu lista de deseos y aparecerán aquí.",
       itemsInWishlist: "{count} artículos en la lista de deseos",
       addToWishlist: "Añadir a la lista de deseos",
       removeFromWishlist: "Eliminar de la lista de deseos",
       added: "añadido a la lista de deseos",
-      removed: "eliminado de la lista de deseos"
+      removed: "eliminado de la lista de deseos",
+      itemCount: "{count} {count, plural, one {artículo} other {artículos}} en la lista de deseos",
+      clearAll: "Eliminar todo",
+      continueShopping: "Explorar productos"
     },
     store: {
       aboutSeller: "Acerca del vendedor",
@@ -337,7 +442,13 @@ const translations = {
       followers: "Seguidores",
       following: "Siguiendo",
       follow: "Seguir tienda",
-      unfollow: "Dejar de seguir"
+      unfollow: "Dejar de seguir",
+      exploreStores: "Explorar tiendas",
+      discoverSellers: "Descubre vendedores de todo el mundo",
+      searchPlaceholder: "Buscar tiendas...",
+      noResults: "No se encontraron tiendas",
+      tryDifferentSearch: "Intenta con un término de búsqueda diferente",
+      unknownSeller: "Vendedor desconocido"
     },
     currency: {
       usd: "USD",
@@ -431,10 +542,14 @@ const translations = {
       onlyXLeft: "المنتج المتاح فقط {count}",
       quantity: "الكمية",
       warrantyGuarantee: "ضمان 30 يومًا للإرجاع",
-      deliveryEstimate: "التوقعات للوصول في {days} أيام عمل"
+      deliveryEstimate: "التوقعات للوصول في {days} أيام عمل",
+      viewDetails: "عرض التفاصيل",
+      singleItem: "منتج واحد",
+      multipleItems: "منتجات متعددة"
     },
     cart: {
       empty: "سلة التسوق فارغة",
+      emptyMessage: "يبدو أنك لم تضف أي منتجات إلى سلة التسوق الخاصة بك بعد.",
       continueShopping: "مواصلة التسوق",
       itemsInCart: "{count} {count, plural, one {منتج} other {منتجات}} في السلة",
       subtotal: "المجموع الفرعي",
@@ -444,17 +559,33 @@ const translations = {
       proceedToCheckout: "تقدم للدفع",
       checkout: "الدفع",
       added: "أضيف إلى السلة",
-      removed: "أُزال من السلة",
+      removed: "أُزيل من السلة",
       updated: "تم تحديث الكمية",
-      cleared: "تم إزالة السلة"
+      cleared: "تم إزالة السلة",
+      yourCart: "سلة التسوق الخاصة بك",
+      item: "منتج",
+      items: "منتجات",
+      clearCart: "إفراغ السلة",
+      cartItems: "عناصر السلة",
+      soldBy: "مباع من قبل",
+      unknownSeller: "بائع غير معروف",
+      remove: "إزالة",
+      orderSummary: "ملخص الطلب",
+      calculatedAtCheckout: "محسوب عند الدفع",
+      freeReturn: "إرجاع مجاني خلال 30 يومًا"
     },
     wishlist: {
       empty: "قائمة الرغبات الخاصة بك فارغة",
+      emptyTitle: "قائمة الرغبات الخاصة بك فارغة",
+      emptyMessage: "احفظ العناصر التي تعجبك في قائمة الرغبات الخاصة بك وستظهر هنا.",
       itemsInWishlist: "{count} عناصر في قائمة الرغبات الخاصة بك",
       addToWishlist: "أضف إلى قائمة الرغبات",
       removeFromWishlist: "ازالة من قائمة الرغبات",
       added: "أُضيف إلى قائمة الرغبات",
-      removed: "أُزال من قائمة الرغبات"
+      removed: "أُزيل من قائمة الرغبات",
+      itemCount: "{count} {count, plural, one {عنصر} other {عناصر}} في قائمة الرغبات",
+      clearAll: "إزالة الكل",
+      continueShopping: "تصفح المنتجات"
     },
     store: {
       aboutSeller: "معلومات المورد",
@@ -464,7 +595,13 @@ const translations = {
       followers: "المتابعين",
       following: "المساهمين",
       follow: "إتباع المتجر",
-      unfollow: "إلغاء الإتباع"
+      unfollow: "إلغاء الإتباع",
+      exploreStores: "استكشاف المتاجر",
+      discoverSellers: "اكتشف البائعين من جميع أنحاء العالم",
+      searchPlaceholder: "ابحث عن المتاجر...",
+      noResults: "لم يتم العثور على متاجر",
+      tryDifferentSearch: "حاول مصطلح بحث مختلف",
+      unknownSeller: "بائع غير معروف"
     },
     currency: {
       usd: "USD",
@@ -558,10 +695,14 @@ const translations = {
       onlyXLeft: "仅剩 {count} 个",
       quantity: "数量",
       warrantyGuarantee: "30天无理由退货",
-      deliveryEstimate: "预计{days}个工作日内送达"
+      deliveryEstimate: "预计{days}个工作日内送达",
+      viewDetails: "查看详情",
+      singleItem: "找到的产品",
+      multipleItems: "找到的产品"
     },
     cart: {
       empty: "您的购物车是空的",
+      emptyMessage: "您的购物车是空的。",
       continueShopping: "继续购物",
       itemsInCart: "{count} {count, plural, one {件} other {件}} 在购物车中",
       subtotal: "小计",
@@ -573,15 +714,31 @@ const translations = {
       added: "已添加到购物车",
       removed: "已从购物车移除",
       updated: "已更新数量",
-      cleared: "购物车已清空"
+      cleared: "购物车已清空",
+      yourCart: "您的购物车",
+      item: "件",
+      items: "件",
+      clearCart: "清空购物车",
+      cartItems: "购物车中的商品",
+      soldBy: "卖家",
+      unknownSeller: "未知卖家",
+      remove: "移除",
+      orderSummary: "订单摘要",
+      calculatedAtCheckout: "在结算时计算",
+      freeReturn: "30天免费退货"
     },
     wishlist: {
       empty: "你的收藏列表是空的",
+      emptyTitle: "你的收藏列表是空的",
+      emptyMessage: "将您喜欢的商品保存在收藏列表中，它们将出现在这里。",
       itemsInWishlist: "{count} 个项目在你的收藏列表中",
       addToWishlist: "添加到收藏列表",
       removeFromWishlist: "从收藏列表移除",
       added: "已添加到收藏列表",
-      removed: "已从收藏列表移除"
+      removed: "已从收藏列表移除",
+      itemCount: "{count} {count, plural, one {个项目} other {个项目}}在收藏列表中",
+      clearAll: "清空所有",
+      continueShopping: "继续购物"
     },
     store: {
       aboutSeller: "关于卖家",
@@ -591,14 +748,20 @@ const translations = {
       followers: "粉丝",
       following: "关注",
       follow: "关注店铺",
-      unfollow: "取消关注"
+      unfollow: "取消关注",
+      exploreStores: "探索店铺",
+      discoverSellers: "发现来自世界各地的卖家",
+      searchPlaceholder: "搜索店铺...",
+      noResults: "未找到店铺",
+      tryDifferentSearch: "尝试不同的搜索词",
+      unknownSeller: "未知卖家"
     },
     currency: {
-      usd: "USD",
-      eur: "EUR",
-      gbp: "GBP",
-      jpy: "JPY",
-      cny: "CNY"
+      usd: "美元",
+      eur: "欧元",
+      gbp: "英镑",
+      jpy: "日元",
+      cny: "人民币"
     }
   },
   pt: {
@@ -685,10 +848,14 @@ const translations = {
       onlyXLeft: "Apenas {count} em estoque",
       quantity: "Quantidade",
       warrantyGuarantee: "Garantia de 30 dias para reembolso",
-      deliveryEstimate: "Estimativa de entrega em {days} dias úteis"
+      deliveryEstimate: "Estimativa de entrega em {days} dias úteis",
+      viewDetails: "Ver Detalhes",
+      singleItem: "Produto encontrado",
+      multipleItems: "Produtos encontrados"
     },
     cart: {
       empty: "Seu carrinho está vazio",
+      emptyMessage: "Seu carrinho está vazio.",
       continueShopping: "Continuar Comprando",
       itemsInCart: "{count} {count, plural, one {item} other {items}} no carrinho",
       subtotal: "Subtotal",
@@ -700,15 +867,31 @@ const translations = {
       added: "adicionado ao carrinho",
       removed: "removido do carrinho",
       updated: "quantidade atualizada",
-      cleared: "Carrinho limpo"
+      cleared: "Carrinho limpo",
+      yourCart: "Seu Carrinho",
+      item: "item",
+      items: "itens",
+      clearCart: "Limpar Carrinho",
+      cartItems: "Itens no Carrinho",
+      soldBy: "vendido por",
+      unknownSeller: "Vendedor desconhecido",
+      remove: "Remover",
+      orderSummary: "Resumo do Pedido",
+      calculatedAtCheckout: "Calculado no checkout",
+      freeReturn: "Retornos gratuitos em 30 dias"
     },
     wishlist: {
       empty: "Sua lista de desejos está vazia",
+      emptyTitle: "Sua lista de desejos está vazia",
+      emptyMessage: "Adicione itens que você gosta à sua lista de desejos e eles aparecerão aqui.",
       itemsInWishlist: "{count} itens na lista de desejos",
       addToWishlist: "Adicionar à lista de desejos",
       removeFromWishlist: "Remover da lista de desejos",
       added: "adicionado à lista de desejos",
-      removed: "removido da lista de desejos"
+      removed: "removido da lista de desejos",
+      itemCount: "{count} {count, plural, one {item} other {itens}} na lista de desejos",
+      clearAll: "Limpar Tudo",
+      continueShopping: "Continuar Comprando"
     },
     store: {
       aboutSeller: "Sobre o Vendedor",
@@ -718,7 +901,13 @@ const translations = {
       followers: "Seguidores",
       following: "Seguindo",
       follow: "Seguir Loja",
-      unfollow: "Deixar de Seguir"
+      unfollow: "Deixar de Seguir",
+      exploreStores: "Explorar Lojas",
+      discoverSellers: "Descubra vendedores de todo o mundo",
+      searchPlaceholder: "Pesquisar lojas...",
+      noResults: "Nenhuma loja encontrada",
+      tryDifferentSearch: "Tente um termo de pesquisa diferente",
+      unknownSeller: "Vendedor desconhecido"
     },
     currency: {
       usd: "USD",
@@ -760,7 +949,7 @@ const translations = {
       accessories: "Vifaa",
       all: "Jamii Zote"
     },
-     nav: {
+    nav: {
       categories: "Jamii",
       deals: "Kufanya Kwa Dhaula",
       trending: "Tendanisho",
@@ -816,6 +1005,7 @@ const translations = {
     },
     cart: {
       empty: "Gari yako ni kuchungu",
+      emptyMessage: "Gari yako ni kuchungu.",
       continueShopping: "Kuwa Kuhusu Bidhaa",
       itemsInCart: "{count} {count, plural, one {bidhaa} other {bidhaa}} kwenye gari",
       subtotal: "Subtotal",
@@ -827,15 +1017,31 @@ const translations = {
       added: "ongeza kwenye gari",
       removed: "kufanya kwenye gari",
       updated: "kupata kwenye gari",
-      cleared: "Gari kufanya"
+      cleared: "Gari kufanya",
+      yourCart: "Gari yako",
+      item: "bidhaa",
+      items: "bidhaa",
+      clearCart: "Kufanya Gari",
+      cartItems: "Bidhaa kwenye Gari",
+      soldBy: "Mafuta",
+      unknownSeller: "Mafuta",
+      remove: "Kufanya",
+      orderSummary: "Muhtasari wa Agizo",
+      calculatedAtCheckout: "Kuhesabiwa wakati wa malipo",
+      freeReturn: "Kurejesha bure kwa siku 30"
     },
     wishlist: {
       empty: "Orodha yako ya matamanio ni kuchungu",
+      emptyTitle: "Orodha yako ya matamanio ni kuchungu",
+      emptyMessage: "Ongeza bidhaa unazopenda kwenye orodha yako ya matamanio na zitaonekana hapa.",
       itemsInWishlist: "{count} bidhaa kwenye orodha yako ya matamanio",
       addToWishlist: "Ongeza kwenye orodha yako ya matamanio",
       removeFromWishlist: "Kufanya kwenye orodha yako ya matamanio",
       added: "ongeza kwenye orodha yako ya matamanio",
-      removed: "kufanya kwenye orodha yako ya matamanio"
+      removed: "kufanya kwenye orodha yako ya matamanio",
+      itemCount: "{count} bidhaa kwenye orodha yako ya matamanio",
+      clearAll: "Ongeza kwenye orodha yako ya matamanio",
+      continueShopping: "Kuwa Kuhusu Bidhaa"
     },
     store: {
       aboutSeller: "Maelezo ya Vendaji",
@@ -845,7 +1051,13 @@ const translations = {
       followers: "Mafuta",
       following: "Mafuta",
       follow: "Kufanya Maduka",
-      unfollow: "Kufanya Maduka"
+      unfollow: "Kufanya Maduka",
+      exploreStores: "Maelezo ya Maduka",
+      discoverSellers: "Uchungu kuhusu Vendaji",
+      searchPlaceholder: "Tafuta maduka...",
+      noResults: "Hakuna maduka yaliyopatikana",
+      tryDifferentSearch: "Jaribu neno tofauti la kutafuta",
+      unknownSeller: "Mafuta"
     },
     currency: {
       usd: "USD",

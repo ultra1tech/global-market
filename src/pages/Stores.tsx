@@ -6,11 +6,11 @@ import StoreCard from '@/components/shared/StoreCard';
 import { storeData } from '@/mocks/storesData';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Input } from '@/components/ui/input';
-import { MapPin, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 const Stores = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const { t } = useLanguage();
+  const { t, direction } = useLanguage();
   
   // Filter stores based on search term
   const filteredStores = storeData.filter(
@@ -22,7 +22,7 @@ const Stores = () => {
   
   return (
     <MainLayout>
-      <div className="marketplace-container py-8">
+      <div className="marketplace-container py-8" dir={direction}>
         <h1 className="text-3xl font-bold mb-2">{t('store.exploreStores')}</h1>
         <p className="text-gray-600 mb-8">{t('store.discoverSellers')}</p>
         

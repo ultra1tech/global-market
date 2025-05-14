@@ -13,6 +13,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Heart, ShoppingCart, Eye } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { formatCurrency } from '@/utils/formatters';
+import { toast } from '@/hooks/use-toast';
 
 const WishlistPage: React.FC = () => {
   const { items, removeFromWishlist, clearWishlist } = useWishlist();
@@ -26,8 +27,12 @@ const WishlistPage: React.FC = () => {
       price: item.price,
       image: item.image,
       quantity: 1,
-      storeId: '1', // Default value, should be replaced with actual storeId
-      storeName: item.store
+      storeId: item.storeId || '1', // Default value, should be replaced with actual storeId
+      storeName: item.storeName || item.store
+    });
+    
+    toast({
+      description: `${item.name} ${t('cart.added')}`
     });
   };
 
@@ -79,14 +84,19 @@ const WishlistPage: React.FC = () => {
                     variant="destructive"
                     size="icon"
                     className="absolute top-2 right-2"
-                    onClick={() => removeFromWishlist(item.id)}
+                    onClick={() => {
+                      removeFromWishlist(item.id);
+                      toast({
+                        description: `${item.name} ${t('wishlist.removed')}`
+                      });
+                    }}
                   >
                     <Heart className="fill-white" size={16} />
                   </Button>
                 </div>
                 <CardContent className="pt-4">
                   <div className="text-sm text-muted-foreground mb-1">
-                    {item.store}
+                    {item.store || item.storeName || t('store.unknownSeller')}
                   </div>
                   <Link to={`/product/${item.id}`} className="hover:underline">
                     <h3 className="font-medium text-lg mb-2 line-clamp-2">

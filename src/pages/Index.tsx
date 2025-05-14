@@ -1,14 +1,14 @@
+
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import MainLayout from '@/components/layouts/MainLayout';
 import { Button } from "@/components/ui/button";
 import { useAuth } from '@/contexts/AuthContext';
-import { showInfoToast } from '@/components/shared/AlertToast';
+import { toast } from '@/hooks/use-toast';
 import { allProducts } from '@/mocks/productsData';
 import { storeData } from '@/mocks/storesData';
-import WishlistButton from '@/components/shared/WishlistButton';
-import StoreCard from '@/components/shared/StoreCard';
 import ProductCard from '@/components/shared/ProductCard';
+import StoreCard from '@/components/shared/StoreCard';
 import { 
   Carousel,
   CarouselContent,
@@ -22,21 +22,21 @@ import { useLanguage } from '@/contexts/LanguageContext';
 const Index = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, direction } = useLanguage();
   
   const featuredProducts = allProducts.filter(product => product.isFeatured).slice(0, 8);
   const newArrivals = allProducts.filter(product => product.isNew).slice(0, 8);
   const featuredStores = storeData.slice(0, 5);
 
   const handleShowToast = () => {
-    showInfoToast(
-      "Welcome to B.A.W. Marketplace", 
-      "Discover unique products from sellers around the world.", 
-      {
-        label: "Browse Products",
+    toast({
+      title: "Welcome to B.A.W. Marketplace",
+      description: "Discover unique products from sellers around the world.",
+      action: {
+        label: t('product.browseProducts'),
         onClick: () => navigate("/browse")
       }
-    );
+    });
   };
 
   const handleSellerDashboard = () => {
@@ -66,16 +66,15 @@ const Index = () => {
   return (
     <MainLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-50 to-indigo-50 py-16 md:py-24">
+      <section className="bg-gradient-to-r from-blue-50 to-indigo-50 py-16 md:py-24" dir={direction}>
         <div className="marketplace-container">
           <div className="flex flex-col-reverse md:flex-row items-center">
             <div className="md:w-1/2 text-center md:text-left mt-8 md:mt-0">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6">
-                Sell & Shop Products from Around the World
+                {t('home.heroTitle', { fallback: "Sell & Shop Products from Around the World" })}
               </h1>
               <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-lg">
-                A global marketplace connecting small businesses and buyers across borders.
-                Discover authentic products from every corner of the globe.
+                {t('home.heroSubtitle', { fallback: "A global marketplace connecting small businesses and buyers across borders. Discover authentic products from every corner of the globe." })}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <Button 
@@ -83,8 +82,8 @@ const Index = () => {
                   className="px-6 py-6 text-base font-medium flex items-center"
                   onClick={handleSellerDashboard}
                 >
-                  <ShoppingBag className="mr-2 h-5 w-5" />
-                  Start Selling
+                  <ShoppingBag className={direction === 'rtl' ? 'ml-2' : 'mr-2'} />
+                  {t('home.startSelling', { fallback: "Start Selling" })}
                 </Button>
                 <Button 
                   size="lg" 
@@ -92,7 +91,10 @@ const Index = () => {
                   className="px-6 py-6 text-base font-medium flex items-center"
                   asChild
                 >
-                  <Link to="/browse">Browse Products <ChevronRight className="ml-1 h-4 w-4" /></Link>
+                  <Link to="/browse">
+                    {t('product.browseProducts')}
+                    <ChevronRight className={direction === 'rtl' ? 'mr-1 rotate-180' : 'ml-1'} />
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -100,12 +102,12 @@ const Index = () => {
               <div className="relative">
                 <img 
                   src="https://images.unsplash.com/photo-1607082349566-187342175e2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                  alt="Global Marketplace" 
+                  alt={t('home.globalMarketplace', { fallback: "Global Marketplace" })} 
                   className="rounded-lg shadow-xl object-cover w-full h-[300px] md:h-[400px] lg:h-[500px]"
                 />
                 <div className="absolute -bottom-4 -right-4 bg-white p-3 rounded-lg shadow-md hidden md:flex items-center">
                   <Globe className="text-marketplace-primary mr-2 h-5 w-5" />
-                  <span className="text-sm font-medium">150+ Countries</span>
+                  <span className="text-sm font-medium">{t('home.countriesCount', { fallback: "150+ Countries" })}</span>
                 </div>
               </div>
             </div>
@@ -114,12 +116,12 @@ const Index = () => {
       </section>
 
       {/* Categories Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white" dir={direction}>
         <div className="marketplace-container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Shop by Categories</h2>
+            <h2 className="text-3xl font-bold mb-4">{t('home.shopByCategories', { fallback: "Shop by Categories" })}</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Explore our wide range of product categories from sellers around the world
+              {t('home.categoriesSubtitle', { fallback: "Explore our wide range of product categories from sellers around the world" })}
             </p>
           </div>
           
@@ -151,18 +153,19 @@ const Index = () => {
       </section>
 
       {/* Featured Stores Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50" dir={direction}>
         <div className="marketplace-container">
           <div className="flex justify-between items-center mb-12">
             <div>
-              <h2 className="text-3xl font-bold mb-2">Featured Stores</h2>
+              <h2 className="text-3xl font-bold mb-2">{t('home.featuredStores', { fallback: "Featured Stores" })}</h2>
               <p className="text-gray-600">
-                Handpicked stores with quality products and excellent service
+                {t('home.featuredStoresSubtitle', { fallback: "Handpicked stores with quality products and excellent service" })}
               </p>
             </div>
             <Button variant="outline" asChild>
               <Link to="/stores" className="flex items-center">
-                View All <ChevronRight className="ml-1 h-4 w-4" />
+                {t('home.viewAll', { fallback: "View All" })} 
+                <ChevronRight className={direction === 'rtl' ? 'mr-1 rotate-180' : 'ml-1'} />
               </Link>
             </Button>
           </div>
@@ -173,6 +176,7 @@ const Index = () => {
               loop: true,
             }}
             className="w-full"
+            dir={direction}
           >
             <CarouselContent className="-ml-4">
               {featuredStores.map((store) => (
@@ -190,18 +194,19 @@ const Index = () => {
       </section>
 
       {/* Trending Products Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white" dir={direction}>
         <div className="marketplace-container">
           <div className="flex justify-between items-center mb-12">
             <div>
-              <h2 className="text-3xl font-bold mb-2">Trending Products</h2>
+              <h2 className="text-3xl font-bold mb-2">{t('home.trendingProducts', { fallback: "Trending Products" })}</h2>
               <p className="text-gray-600">
-                Discover what others are loving right now
+                {t('home.trendingProductsSubtitle', { fallback: "Discover what others are loving right now" })}
               </p>
             </div>
             <Button variant="outline" asChild>
               <Link to="/browse" className="flex items-center">
-                View All <ChevronRight className="ml-1 h-4 w-4" />
+                {t('home.viewAll', { fallback: "View All" })} 
+                <ChevronRight className={direction === 'rtl' ? 'mr-1 rotate-180' : 'ml-1'} />
               </Link>
             </Button>
           </div>
@@ -215,18 +220,19 @@ const Index = () => {
       </section>
 
       {/* New Arrivals Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50" dir={direction}>
         <div className="marketplace-container">
           <div className="flex justify-between items-center mb-12">
             <div>
-              <h2 className="text-3xl font-bold mb-2">New Arrivals</h2>
+              <h2 className="text-3xl font-bold mb-2">{t('home.newArrivals', { fallback: "New Arrivals" })}</h2>
               <p className="text-gray-600">
-                The latest products added to our marketplace
+                {t('home.newArrivalsSubtitle', { fallback: "The latest products added to our marketplace" })}
               </p>
             </div>
             <Button variant="outline" asChild>
               <Link to="/browse?sort=newest" className="flex items-center">
-                View All <ChevronRight className="ml-1 h-4 w-4" />
+                {t('home.viewAll', { fallback: "View All" })} 
+                <ChevronRight className={direction === 'rtl' ? 'mr-1 rotate-180' : 'ml-1'} />
               </Link>
             </Button>
           </div>
@@ -240,13 +246,12 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-marketplace-primary text-white">
+      <section className="py-16 bg-marketplace-primary text-white" dir={direction}>
         <div className="marketplace-container">
           <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6">Become a Seller Today</h2>
+            <h2 className="text-3xl font-bold mb-6">{t('home.becomeSellerTitle', { fallback: "Become a Seller Today" })}</h2>
             <p className="text-lg mb-8">
-              Join thousands of successful sellers on our global marketplace. 
-              Create your store and start selling to customers worldwide.
+              {t('home.becomeSellerDescription', { fallback: "Join thousands of successful sellers on our global marketplace. Create your store and start selling to customers worldwide." })}
             </p>
             <Button 
               variant="secondary" 
@@ -254,7 +259,7 @@ const Index = () => {
               className="px-6 py-6 text-base font-medium"
               onClick={handleSellerDashboard}
             >
-              {user?.role === "seller" ? "Seller Dashboard" : "Start Selling"}
+              {user?.role === "seller" ? t('home.sellerDashboard', { fallback: "Seller Dashboard" }) : t('home.startSelling', { fallback: "Start Selling" })}
             </Button>
           </div>
         </div>

@@ -7,12 +7,13 @@ import { allProducts } from '@/mocks/productsData';
 import MainLayout from '@/components/layouts/MainLayout';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { formatCurrency } from '@/utils/formatters';
 
 const Browse = () => {
   const [searchParams] = useSearchParams();
   const categoryParam = searchParams.get('category');
   const searchQuery = searchParams.get('search') || '';
-  const { t } = useLanguage();
+  const { t, direction } = useLanguage();
   
   const [searchTerm, setSearchTerm] = useState(searchQuery);
   
@@ -47,7 +48,7 @@ const Browse = () => {
 
   return (
     <MainLayout>
-      <div className="marketplace-container py-8">
+      <div className="marketplace-container py-8" dir={direction}>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold mb-2">
@@ -56,7 +57,9 @@ const Browse = () => {
                 : t('categories.all')}
             </h1>
             <p className="text-gray-500">
-              {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'} found
+              {filteredProducts.length} {filteredProducts.length === 1 
+                ? t('product.singleItem') 
+                : t('product.multipleItems')}
             </p>
           </div>
           
@@ -92,7 +95,7 @@ const Browse = () => {
                 <CardContent className="p-4">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-semibold text-md line-clamp-2">{product.name}</h3>
-                    <span className="font-bold text-marketplace-primary">${product.price.toFixed(2)}</span>
+                    <span className="font-bold text-marketplace-primary">{formatCurrency(product.price)}</span>
                   </div>
                   <p className="text-gray-500 text-xs mb-4 line-clamp-2">{product.description || t('product.noDescription')}</p>
                   <div className="flex justify-between items-center">
@@ -110,7 +113,7 @@ const Browse = () => {
                     asChild
                     size="sm"
                   >
-                    <Link to={`/products/${product.id}`}>{t('product.viewDetails') || 'View Details'}</Link>
+                    <Link to={`/products/${product.id}`}>{t('product.viewDetails')}</Link>
                   </Button>
                 </CardContent>
               </Card>

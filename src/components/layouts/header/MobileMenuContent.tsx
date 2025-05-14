@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Search, LogIn, User, Heart } from "lucide-react";
@@ -146,14 +147,14 @@ const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
         {isAuthenticated && (
           <>
             <div className="pt-4 pb-2 border-t border-gray-200 mt-4">
-              <p className="px-3 text-sm font-medium text-muted-foreground mb-2">Your Account</p>
+              <p className="px-3 text-sm font-medium text-muted-foreground mb-2">{t('account.yourAccount', { fallback: "Your Account" })}</p>
               
               <Link 
                 to={getDashboardLink()}
                 className="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-muted"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Dashboard
+                {t('common.dashboard')}
               </Link>
               
               {user?.role === "buyer" && (
@@ -163,14 +164,14 @@ const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
                     className="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-muted"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    My Orders
+                    {t('account.myOrders', { fallback: "My Orders" })}
                   </Link>
                   <Link 
                     to="/buyer/wishlist"
                     className="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-muted"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Wishlist
+                    {t('common.wishlist')}
                   </Link>
                 </>
               )}
@@ -182,14 +183,14 @@ const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
                     className="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-muted"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    My Products
+                    {t('account.myProducts', { fallback: "My Products" })}
                   </Link>
                   <Link 
                     to="/seller-dashboard/orders"
                     className="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-muted"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Orders
+                    {t('account.orders', { fallback: "Orders" })}
                   </Link>
                 </>
               )}
@@ -201,7 +202,7 @@ const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
                     className="flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-muted"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Admin Dashboard
+                    {t('account.adminDashboard', { fallback: "Admin Dashboard" })}
                   </Link>
                 </>
               )}
@@ -213,7 +214,7 @@ const MobileMenuContent: React.FC<MobileMenuContentProps> = ({
                   setMobileMenuOpen(false);
                 }}
               >
-                Sign Out
+                {t('common.logout')}
               </button>
             </div>
           </>
