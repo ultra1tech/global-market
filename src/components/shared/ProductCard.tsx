@@ -29,7 +29,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     e.preventDefault();
     e.stopPropagation();
     addItem(product);
-    toast(`${product.name} ${t('cart.added')}`);
+    toast(`${product.name} ${t('cart.added', { fallback: "added to cart" })}`);
   };
   
   return (
@@ -46,12 +46,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
           {product.isNew && (
             <Badge className="absolute top-2 left-2 bg-marketplace-primary">
-              {t('product.new')}
+              {t('product.new', { fallback: "New" })}
             </Badge>
           )}
           {product.oldPrice && (
             <Badge variant="outline" className="absolute bottom-2 left-2 bg-white">
-              {t('product.sale')}
+              {t('product.sale', { fallback: "Sale" })}
             </Badge>
           )}
         </Link>
@@ -92,7 +92,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 onClick={handleAddToCart}
               >
                 <ShoppingCart className="mr-1 h-4 w-4" />
-                {t('product.addToCart')}
+                {t('product.addToCart', { fallback: "Add to Cart" })}
               </Button>
             </div>
           )}

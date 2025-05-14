@@ -59,7 +59,7 @@ const StoreCard: React.FC<StoreCardProps> = ({ store }) => {
         </div>
         {store.verified && (
           <Badge className="absolute top-2 right-2 bg-marketplace-primary">
-            {t('store.verified')}
+            {t('store.verified', { fallback: "Verified" })}
           </Badge>
         )}
       </div>
@@ -77,11 +77,11 @@ const StoreCard: React.FC<StoreCardProps> = ({ store }) => {
           <div className="flex items-center">
             <Star size={16} className="text-yellow-500 mr-1" />
             <span className="text-sm font-medium">
-              {store.rating} ({store.reviewCount} {t('store.reviews')})
+              {store.rating} ({store.reviewCount} {t('store.reviews', { fallback: "reviews" })})
             </span>
           </div>
           <span className="text-xs text-gray-500">
-            {store.productCount} {t('store.products')}
+            {store.productCount} {t('store.products', { fallback: "products" })}
           </span>
         </div>
       </CardContent>

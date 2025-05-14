@@ -30,11 +30,11 @@ const Index = () => {
 
   const handleShowToast = () => {
     toast({
-      title: "Welcome to B.A.W. Marketplace",
-      description: "Discover unique products from sellers around the world.",
+      title: t('home.welcome', { fallback: "Welcome to B.A.W. Marketplace" }),
+      description: t('home.welcomeDescription', { fallback: "Discover unique products from sellers around the world." }),
       action: (
         <Button variant="outline" size="sm" onClick={() => navigate("/browse")}>
-          {t('product.browseProducts')}
+          {t('product.browseProducts', { fallback: "Browse Products" })}
         </Button>
       )
     });
@@ -93,7 +93,7 @@ const Index = () => {
                   asChild
                 >
                   <Link to="/browse">
-                    {t('product.browseProducts')}
+                    {t('product.browseProducts', { fallback: "Browse Products" })}
                     <ChevronRight className={direction === 'rtl' ? 'mr-1 rotate-180' : 'ml-1'} />
                   </Link>
                 </Button>
@@ -136,7 +136,7 @@ const Index = () => {
                 <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center mb-4 shadow-sm group-hover:shadow-md transition-all">
                   <img 
                     src={category.icon} 
-                    alt={t(category.nameKey)} 
+                    alt={t(category.nameKey, { fallback: category.nameKey.split('.')[1] })} 
                     className="w-8 h-8 text-marketplace-primary"
                     onError={(e) => {
                       // Fallback if icon doesn't load
@@ -145,7 +145,7 @@ const Index = () => {
                   />
                 </div>
                 <h3 className="font-medium text-lg group-hover:text-marketplace-primary transition-colors">
-                  {t(category.nameKey)}
+                  {t(category.nameKey, { fallback: category.nameKey.split('.')[1] })}
                 </h3>
               </Link>
             ))}

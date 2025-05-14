@@ -142,7 +142,9 @@ const translations = {
       searchPlaceholder: "Search for stores...",
       noResults: "No stores found",
       tryDifferentSearch: "Try a different search term",
-      unknownSeller: "Unknown Seller"
+      unknownSeller: "Unknown Seller",
+      verified: "Verified",
+      reviews: "reviews"
     },
     currency: {
       usd: "USD",
@@ -150,6 +152,27 @@ const translations = {
       gbp: "GBP",
       jpy: "JPY",
       cny: "CNY"
+    },
+    home: {
+      welcome: "Welcome to B.A.W. Marketplace",
+      welcomeDescription: "Discover unique products from sellers around the world.",
+      heroTitle: "Sell & Shop Products from Around the World",
+      heroSubtitle: "A global marketplace connecting small businesses and buyers across borders. Discover authentic products from every corner of the globe.",
+      startSelling: "Start Selling",
+      globalMarketplace: "Global Marketplace",
+      countriesCount: "150+ Countries",
+      shopByCategories: "Shop by Categories",
+      categoriesSubtitle: "Explore our wide range of product categories from sellers around the world",
+      featuredStores: "Featured Stores",
+      featuredStoresSubtitle: "Handpicked stores with quality products and excellent service",
+      trendingProducts: "Trending Products",
+      trendingProductsSubtitle: "Discover what others are loving right now",
+      newArrivals: "New Arrivals",
+      newArrivalsSubtitle: "The latest products added to our marketplace",
+      becomeSellerTitle: "Become a Seller Today",
+      becomeSellerDescription: "Join thousands of successful sellers on our global marketplace. Create your store and start selling to customers worldwide.",
+      sellerDashboard: "Seller Dashboard",
+      viewAll: "View All"
     }
   },
   fr: {
@@ -295,7 +318,9 @@ const translations = {
       searchPlaceholder: "Rechercher des magasins...",
       noResults: "Aucun magasin trouvé",
       tryDifferentSearch: "Essayez un terme de recherche différent",
-      unknownSeller: "Vendeur inconnu"
+      unknownSeller: "Vendeur inconnu",
+      verified: "Vérifié",
+      reviews: "avis"
     },
     currency: {
       usd: "USD",
@@ -303,6 +328,27 @@ const translations = {
       gbp: "GBP",
       jpy: "JPY",
       cny: "CNY"
+    },
+    home: {
+      welcome: "Bienvenue sur B.A.W. Marketplace",
+      welcomeDescription: "Découvrez des produits uniques de vendeurs du monde entier.",
+      heroTitle: "Vendez et achetez des produits du monde entier",
+      heroSubtitle: "Un marché mondial qui relie les petites entreprises et les acheteurs au-delà des frontières. Découvrez des produits authentiques de tous les coins du globe.",
+      startSelling: "Commencer à vendre",
+      globalMarketplace: "Marché mondial",
+      countriesCount: "Plus de 150 pays",
+      shopByCategories: "Acheter par catégories",
+      categoriesSubtitle: "Explorez notre large gamme de catégories de produits de vendeurs du monde entier",
+      featuredStores: "Boutiques en vedette",
+      featuredStoresSubtitle: "Boutiques sélectionnées avec des produits de qualité et un excellent service",
+      trendingProducts: "Produits tendance",
+      trendingProductsSubtitle: "Découvrez ce que les autres adorent en ce moment",
+      newArrivals: "Nouveautés",
+      newArrivalsSubtitle: "Les derniers produits ajoutés à notre marché",
+      becomeSellerTitle: "Devenez vendeur aujourd'hui",
+      becomeSellerDescription: "Rejoignez des milliers de vendeurs à succès sur notre marché mondial. Créez votre boutique et commencez à vendre à des clients du monde entier.",
+      sellerDashboard: "Tableau de bord du vendeur",
+      viewAll: "Voir tout"
     }
   },
   es: {
@@ -448,7 +494,9 @@ const translations = {
       searchPlaceholder: "Buscar tiendas...",
       noResults: "No se encontraron tiendas",
       tryDifferentSearch: "Intenta con un término de búsqueda diferente",
-      unknownSeller: "Vendedor desconocido"
+      unknownSeller: "Vendedor desconocido",
+      verified: "Verificado",
+      reviews: "reseñas"
     },
     currency: {
       usd: "USD",
@@ -456,6 +504,27 @@ const translations = {
       gbp: "GBP",
       jpy: "JPY",
       cny: "CNY"
+    },
+    home: {
+      welcome: "Bienvenido a B.A.W. Marketplace",
+      welcomeDescription: "Descubre productos únicos de vendedores de todo el mundo.",
+      heroTitle: "Vende y compra productos de todo el mundo",
+      heroSubtitle: "Un mercado global que conecta pequeñas empresas y compradores a través de fronteras. Descubre productos auténticos de cada rincón del globo.",
+      startSelling: "Empezar a vender",
+      globalMarketplace: "Mercado global",
+      countriesCount: "Más de 150 países",
+      shopByCategories: "Comprar por categorías",
+      categoriesSubtitle: "Explora nuestra amplia gama de categorías de productos de vendedores de todo el mundo",
+      featuredStores: "Tiendas destacadas",
+      featuredStoresSubtitle: "Tiendas seleccionadas con productos de calidad y excelente servicio",
+      trendingProducts: "Productos de tendencia",
+      trendingProductsSubtitle: "Descubre lo que otros están amando ahora mismo",
+      newArrivals: "Novedades",
+      newArrivalsSubtitle: "Los últimos productos añadidos a nuestro mercado",
+      becomeSellerTitle: "Conviértete en vendedor hoy",
+      becomeSellerDescription: "Únete a miles de vendedores exitosos en nuestro mercado global. Crea tu tienda y empieza a vender a clientes de todo el mundo.",
+      sellerDashboard: "Panel de vendedor",
+      viewAll: "Ver todo"
     }
   },
   ar: {
@@ -601,7 +670,9 @@ const translations = {
       searchPlaceholder: "ابحث عن المتاجر...",
       noResults: "لم يتم العثور على متاجر",
       tryDifferentSearch: "حاول مصطلح بحث مختلف",
-      unknownSeller: "بائع غير معروف"
+      unknownSeller: "بائع غير معروف",
+      verified: "تم التحقق",
+      reviews: "التعليقات"
     },
     currency: {
       usd: "USD",
@@ -609,6 +680,27 @@ const translations = {
       gbp: "GBP",
       jpy: "JPY",
       cny: "CNY"
+    },
+    home: {
+      welcome: "مرحبًا بكم في سوق بي إيه دبليو",
+      welcomeDescription: "اكتشف منتجات فريدة من البائعين من جميع أنحاء العالم.",
+      heroTitle: "بيع وتسوق منتجات من جميع أنحاء العالم",
+      heroSubtitle: "سوق عالمي يربط الشركات الصغيرة والمشترين عبر الحدود. اكتشف منتجات أصلية من كل ركن من أركان العالم.",
+      startSelling: "ابدأ البيع",
+      globalMarketplace: "سوق عالمي",
+      countriesCount: "أكثر من 150 دولة",
+      shopByCategories: "تسوق حسب الفئات",
+      categoriesSubtitle: "استكشف مجموعتنا الواسعة من فئات المنتجات من البائعين من جميع أنحاء العالم",
+      featuredStores: "المتاجر المميزة",
+      featuredStoresSubtitle: "متاجر منتقاة بعناية مع منتجات عالية الجودة وخدمة ممتازة",
+      trendingProducts: "المنتجات الرائجة",
+      trendingProductsSubtitle: "اكتشف ما يحبه الآخرون الآن",
+      newArrivals: "الوصول الجديد",
+      newArrivalsSubtitle: "أحدث المنتجات المضافة إلى سوقنا",
+      becomeSellerTitle: "كن بائعًا اليوم",
+      becomeSellerDescription: "انضم إلى آلاف البائعين الناجحين في سوقنا العالمي. أنشئ متجرك وابدأ البيع للعملاء في جميع أنحاء العالم.",
+      sellerDashboard: "لوحة تحكم البائع",
+      viewAll: "عرض الكل"
     }
   },
   zh: {
@@ -754,7 +846,9 @@ const translations = {
       searchPlaceholder: "搜索店铺...",
       noResults: "未找到店铺",
       tryDifferentSearch: "尝试不同的搜索词",
-      unknownSeller: "未知卖家"
+      unknownSeller: "未知卖家",
+      verified: "已验证",
+      reviews: "评论"
     },
     currency: {
       usd: "美元",
@@ -762,6 +856,27 @@ const translations = {
       gbp: "英镑",
       jpy: "日元",
       cny: "人民币"
+    },
+    home: {
+      welcome: "欢迎来到 B.A.W. 市场",
+      welcomeDescription: "发现来自世界各地卖家的独特产品。",
+      heroTitle: "从世界各地销售和购物产品",
+      heroSubtitle: "一个连接跨境的小型企业和买家的全球市场。发现来自世界各个角落的原创产品。",
+      startSelling: "开始销售",
+      globalMarketplace: "全球市场",
+      countriesCount: "超过150个国家",
+      shopByCategories: "按类别购物",
+      categoriesSubtitle: "探索我们从世界各地卖家提供的各种产品类别",
+      featuredStores: "特色商店",
+      featuredStoresSubtitle: "精心挑选的优质产品和卓越服务的商店",
+      trendingProducts: "热门产品",
+      trendingProductsSubtitle: "发现其他人现在喜欢的产品",
+      newArrivals: "新品到货",
+      newArrivalsSubtitle: "我们市场上添加的最新产品",
+      becomeSellerTitle: "今天成为卖家",
+      becomeSellerDescription: "加入我们全球市场上成千上万的成功卖家。创建您的商店并开始向全球客户销售。",
+      sellerDashboard: "卖家仪表板",
+      viewAll: "查看全部"
     }
   },
   pt: {
@@ -857,7 +972,7 @@ const translations = {
       empty: "Seu carrinho está vazio",
       emptyMessage: "Seu carrinho está vazio.",
       continueShopping: "Continuar Comprando",
-      itemsInCart: "{count} {count, plural, one {item} other {items}} no carrinho",
+      itemsInCart: "{count} {count, plural, one {item} other {itens}} no carrinho",
       subtotal: "Subtotal",
       shipping: "Entrega",
       tax: "Imposto",
@@ -907,7 +1022,9 @@ const translations = {
       searchPlaceholder: "Pesquisar lojas...",
       noResults: "Nenhuma loja encontrada",
       tryDifferentSearch: "Tente um termo de pesquisa diferente",
-      unknownSeller: "Vendedor desconhecido"
+      unknownSeller: "Vendedor desconhecido",
+      verified: "Verificado",
+      reviews: "avaliações"
     },
     currency: {
       usd: "USD",
@@ -915,6 +1032,27 @@ const translations = {
       gbp: "GBP",
       jpy: "JPY",
       cny: "CNY"
+    },
+    home: {
+      welcome: "Bem-vindo ao B.A.W. Marketplace",
+      welcomeDescription: "Descubra produtos únicos de vendedores de todo o mundo.",
+      heroTitle: "Venda e compre produtos de todo o mundo",
+      heroSubtitle: "Um mercado global conectando pequenos negócios e compradores através de fronteiras. Descubra produtos autênticos de todos os cantos do globo.",
+      startSelling: "Começar a vender",
+      globalMarketplace: "Mercado global",
+      countriesCount: "Mais de 150 países",
+      shopByCategories: "Comprar por categorias",
+      categoriesSubtitle: "Explore nossa ampla gama de categorias de produtos de vendedores de todo o mundo",
+      featuredStores: "Lojas em destaque",
+      featuredStoresSubtitle: "Lojas selecionadas com produtos de qualidade e excelente serviço",
+      trendingProducts: "Produtos em tendência",
+      trendingProductsSubtitle: "Descubra o que os outros estão adorando agora",
+      newArrivals: "Novidades",
+      newArrivalsSubtitle: "Os produtos mais recentes adicionados ao nosso mercado",
+      becomeSellerTitle: "Torne-se um vendedor hoje",
+      becomeSellerDescription: "Junte-se a milhares de vendedores de sucesso em nosso mercado global. Crie sua loja e comece a vender para clientes em todo o mundo.",
+      sellerDashboard: "Painel do vendedor",
+      viewAll: "Ver tudo"
     }
   },
   sw: {
@@ -1057,7 +1195,9 @@ const translations = {
       searchPlaceholder: "Tafuta maduka...",
       noResults: "Hakuna maduka yaliyopatikana",
       tryDifferentSearch: "Jaribu neno tofauti la kutafuta",
-      unknownSeller: "Mafuta"
+      unknownSeller: "Mafuta",
+      verified: "Imethibitishwa",
+      reviews: "maoni"
     },
     currency: {
       usd: "USD",
@@ -1065,6 +1205,27 @@ const translations = {
       gbp: "GBP",
       jpy: "JPY",
       cny: "CNY"
+    },
+    home: {
+      welcome: "Karibu katika B.A.W. Marketplace",
+      welcomeDescription: "Gundua bidhaa za kipekee kutoka kwa wauzaji kutoka duniani kote.",
+      heroTitle: "Uza na Nunua Bidhaa kutoka Duniani Kote",
+      heroSubtitle: "Soko la kimataifa linaloiunganisha biashara ndogo na wanunuzi kupitia mipaka. Gundua bidhaa halisi kutoka kila pembe ya dunia.",
+      startSelling: "Anza Kuuza",
+      globalMarketplace: "Soko la Kimataifa",
+      countriesCount: "Zaidi ya Nchi 150",
+      shopByCategories: "Nunua kwa Jamii",
+      categoriesSubtitle: "Chunguza aina yetu pana ya jamii za bidhaa kutoka kwa wauzaji duniani kote",
+      featuredStores: "Maduka Yaliyoangaziwa",
+      featuredStoresSubtitle: "Maduka yaliyochaguliwa kwa makini yenye bidhaa bora na huduma bora",
+      trendingProducts: "Bidhaa Zinazofaa",
+      trendingProductsSubtitle: "Gundua kile wengine wanapenda sasa hivi",
+      newArrivals: "Vipya Vilivyofika",
+      newArrivalsSubtitle: "Bidhaa za hivi karibuni zilizoongezwa kwenye soko letu",
+      becomeSellerTitle: "Kuwa Muuzaji Leo",
+      becomeSellerDescription: "Jiunge na maelfu ya wauzaji waliofanikiwa kwenye soko letu la kimataifa. Unda duka lako na uanze kuuza kwa wateja duniani kote.",
+      sellerDashboard: "Dashibodi ya Muuzaji",
+      viewAll: "Tazama Zote"
     }
   }
 };
