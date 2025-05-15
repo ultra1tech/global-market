@@ -1,13 +1,11 @@
 
 import React, { useState } from 'react';
-import { 
-  Card,
-  Input,
-  Button,
-  Avatar,
-  Badge,
-  ScrollArea
-} from '@/components/ui';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Avatar } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Search, PaperclipIcon, Send, MoreVertical } from 'lucide-react';
 
 // Mock conversation data
