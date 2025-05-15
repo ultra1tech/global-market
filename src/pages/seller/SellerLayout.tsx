@@ -34,7 +34,7 @@ interface SellerLayoutProps {
 const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const { collapsed } = useSidebar();
+  const { open } = useSidebar(); // Updated to use open instead of collapsed
   
   if (!user) {
     return null;

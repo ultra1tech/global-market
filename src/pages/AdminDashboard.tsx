@@ -35,7 +35,7 @@ const PlaceholderPage = ({ title }: { title: string }) => (
 const AdminDashboard = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const { collapsed, setCollapsed } = useSidebar();
+  const { open, setOpen } = useSidebar(); // Updated to use open and setOpen instead of collapsed and setCollapsed
 
   // Redirect to the login page if the user is not an admin
   React.useEffect(() => {

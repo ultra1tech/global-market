@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Card, 
   CardContent, 
@@ -110,6 +110,7 @@ const products = [
 ];
 
 const ProductsPage = () => {
+  const navigate = useNavigate(); // Add this line to get access to navigate
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [view, setView] = useState("grid");
