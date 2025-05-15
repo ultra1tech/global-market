@@ -1,21 +1,41 @@
 
 import React from 'react';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route, NavLink, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Users, ShoppingBag, DollarSign, Settings, ShieldAlert } from 'lucide-react';
+import { 
+  Users, 
+  ShoppingBag, 
+  DollarSign, 
+  Settings, 
+  ShieldAlert, 
+  Store, 
+  BarChart2, 
+  Home,
+  LogOut,
+  Menu
+} from 'lucide-react';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
 
-// Placeholder components for admin dashboard sections
-const DashboardOverview = () => <div className="p-6">Admin Dashboard Overview Content</div>;
-const UsersManagement = () => <div className="p-6">Users Management Content</div>;
-const StoresManagement = () => <div className="p-6">Stores Management Content</div>;
-const OrdersManagement = () => <div className="p-6">Orders Management Content</div>;
-const ReportsManagement = () => <div className="p-6">Reports and Analytics Content</div>;
-const SettingsManagement = () => <div className="p-6">Admin Settings Content</div>;
+import DashboardOverview from './admin/DashboardOverview';
+import UserManagement from './admin/UserManagement';
+import OrderMonitoring from './admin/OrderMonitoring';
+import ReportsAnalytics from './admin/ReportsAnalytics';
+import SettingsPage from './admin/SettingsPage';
+import StoresManagement from './admin/StoresManagement';
+
+// Create a placeholder component for admin pages that haven't been implemented yet
+const PlaceholderPage = ({ title }: { title: string }) => (
+  <div className="p-6">
+    <h1 className="text-2xl font-bold mb-4">{title}</h1>
+    <p className="text-gray-500">This feature is coming soon.</p>
+  </div>
+);
 
 const AdminDashboard = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { collapsed, setCollapsed } = useSidebar();
 
   // Redirect to the login page if the user is not an admin
   React.useEffect(() => {
@@ -30,96 +50,178 @@ const AdminDashboard = () => {
     return null;
   }
 
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <div className="w-64 bg-gray-900 text-white">
-        <div className="p-4 border-b border-gray-800">
+      {/* Sidebar using the SidebarProvider component */}
+      <Sidebar>
+        <SidebarHeader className="border-b border-gray-800 p-4">
           <div className="flex items-center space-x-2">
-            <ShieldAlert size={20} />
+            <ShieldAlert size={20} className="text-primary" />
             <h2 className="font-semibold text-xl">Admin Panel</h2>
           </div>
-          <p className="text-sm text-gray-400">{user.name}</p>
-        </div>
+          <p className="text-sm text-muted-foreground">{user.name}</p>
+        </SidebarHeader>
         
-        <nav className="p-4">
-          <ul className="space-y-1">
-            <li>
-              <Link 
-                to="/admin" 
-                className="flex items-center p-2 rounded-md hover:bg-gray-800"
-              >
-                <div className="mr-3 text-gray-400">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                  </svg>
-                </div>
-                Dashboard
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/admin/users" 
-                className="flex items-center p-2 rounded-md hover:bg-gray-800"
-              >
-                <Users size={18} className="mr-3 text-gray-400" />
-                Users
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/admin/stores" 
-                className="flex items-center p-2 rounded-md hover:bg-gray-800"
-              >
-                <ShoppingBag size={18} className="mr-3 text-gray-400" />
-                Stores
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/admin/orders" 
-                className="flex items-center p-2 rounded-md hover:bg-gray-800"
-              >
-                <ShoppingBag size={18} className="mr-3 text-gray-400" />
-                Orders
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/admin/reports" 
-                className="flex items-center p-2 rounded-md hover:bg-gray-800"
-              >
-                <DollarSign size={18} className="mr-3 text-gray-400" />
-                Reports
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/admin/settings" 
-                className="flex items-center p-2 rounded-md hover:bg-gray-800"
-              >
-                <Settings size={18} className="mr-3 text-gray-400" />
-                Settings
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
+        <SidebarContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Dashboard">
+                <NavLink 
+                  to="/admin" 
+                  end
+                  className={({ isActive }) => 
+                    `flex items-center p-2 rounded-md ${
+                      isActive 
+                        ? 'bg-primary text-primary-foreground font-medium' 
+                        : 'text-foreground hover:bg-muted'
+                    }`
+                  }
+                >
+                  <Home className="mr-3 h-5 w-5" />
+                  <span>Dashboard</span>
+                </NavLink>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Users">
+                <NavLink 
+                  to="/admin/users" 
+                  className={({ isActive }) => 
+                    `flex items-center p-2 rounded-md ${
+                      isActive 
+                        ? 'bg-primary text-primary-foreground font-medium' 
+                        : 'text-foreground hover:bg-muted'
+                    }`
+                  }
+                >
+                  <Users className="mr-3 h-5 w-5" />
+                  <span>Users</span>
+                </NavLink>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Stores">
+                <NavLink 
+                  to="/admin/stores" 
+                  className={({ isActive }) => 
+                    `flex items-center p-2 rounded-md ${
+                      isActive 
+                        ? 'bg-primary text-primary-foreground font-medium' 
+                        : 'text-foreground hover:bg-muted'
+                    }`
+                  }
+                >
+                  <Store className="mr-3 h-5 w-5" />
+                  <span>Stores</span>
+                </NavLink>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Orders">
+                <NavLink 
+                  to="/admin/orders" 
+                  className={({ isActive }) => 
+                    `flex items-center p-2 rounded-md ${
+                      isActive 
+                        ? 'bg-primary text-primary-foreground font-medium' 
+                        : 'text-foreground hover:bg-muted'
+                    }`
+                  }
+                >
+                  <ShoppingBag className="mr-3 h-5 w-5" />
+                  <span>Orders</span>
+                </NavLink>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Reports">
+                <NavLink 
+                  to="/admin/reports" 
+                  className={({ isActive }) => 
+                    `flex items-center p-2 rounded-md ${
+                      isActive 
+                        ? 'bg-primary text-primary-foreground font-medium' 
+                        : 'text-foreground hover:bg-muted'
+                    }`
+                  }
+                >
+                  <BarChart2 className="mr-3 h-5 w-5" />
+                  <span>Reports</span>
+                </NavLink>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Settings">
+                <NavLink 
+                  to="/admin/settings" 
+                  className={({ isActive }) => 
+                    `flex items-center p-2 rounded-md ${
+                      isActive 
+                        ? 'bg-primary text-primary-foreground font-medium' 
+                        : 'text-foreground hover:bg-muted'
+                    }`
+                  }
+                >
+                  <Settings className="mr-3 h-5 w-5" />
+                  <span>Settings</span>
+                </NavLink>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarContent>
+        
+        <SidebarFooter>
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start" 
+            onClick={handleLogout}
+          >
+            <LogOut className="mr-3 h-5 w-5" />
+            <span>Logout</span>
+          </Button>
+        </SidebarFooter>
+      </Sidebar>
       
       {/* Main Content */}
       <div className="flex-1 overflow-auto">
-        <header className="bg-white shadow-sm p-4">
-          <h1 className="text-xl font-semibold">Admin Dashboard</h1>
+        <header className="bg-white shadow-sm p-4 flex justify-between items-center">
+          <div className="flex items-center">
+            <SidebarTrigger className="mr-2" />
+            <h1 className="text-xl font-semibold">Admin Dashboard</h1>
+          </div>
+          <div className="flex items-center space-x-4">
+            <span className="text-sm text-muted-foreground">
+              Welcome, {user.name}
+            </span>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleLogout}
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              Logout
+            </Button>
+          </div>
         </header>
         
         <main>
           <Routes>
             <Route path="/" element={<DashboardOverview />} />
-            <Route path="/users" element={<UsersManagement />} />
+            <Route path="/users" element={<UserManagement />} />
             <Route path="/stores" element={<StoresManagement />} />
-            <Route path="/orders" element={<OrdersManagement />} />
-            <Route path="/reports" element={<ReportsManagement />} />
-            <Route path="/settings" element={<SettingsManagement />} />
+            <Route path="/orders" element={<OrderMonitoring />} />
+            <Route path="/reports" element={<ReportsAnalytics />} />
+            <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </main>
       </div>
