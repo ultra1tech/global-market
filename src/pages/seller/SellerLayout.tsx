@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Outlet, NavLink, useLocation } from 'react-router-dom';
 import { 
   Package, 
@@ -13,12 +13,12 @@ import {
   Home 
 } from 'lucide-react';
 
-const SellerLayout = () => {
+interface SellerLayoutProps {
+  children: ReactNode;
+}
+
+const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
   const location = useLocation();
-  
-  const isActive = (path: string) => {
-    return location.pathname.includes(path);
-  };
   
   return (
     <div className="flex h-screen bg-gray-100">
@@ -162,7 +162,7 @@ const SellerLayout = () => {
       
       {/* Main Content */}
       <div className="flex-1 overflow-auto">
-        <Outlet />
+        {children}
       </div>
     </div>
   );
