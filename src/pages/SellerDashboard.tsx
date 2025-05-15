@@ -33,18 +33,16 @@ const SellerDashboard = () => {
   }
 
   return (
-    <SellerLayout>
-      <Routes>
-        <Route path="/" element={<DashboardOverview />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/add-product" element={<AddProductPage />} />
-        <Route path="/orders" element={<OrdersPage />} />
-        <Route path="/analytics" element={<AnalyticsPage />} />
-        <Route path="/messages" element={<MessagesPage />} />
-        <Route path="/support" element={<SupportPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-      </Routes>
-    </SellerLayout>
+    <Routes>
+      <Route path="/" element={<SellerLayout><DashboardOverview /></SellerLayout>} />
+      <Route path="/products" element={<SellerLayout><ProductsPage /></SellerLayout>} />
+      <Route path="/add-product" element={<SellerLayout><AddProductPage /></SellerLayout>} />
+      <Route path="/orders" element={<SellerLayout><OrdersPage /></SellerLayout>} />
+      <Route path="/analytics" element={<SellerLayout><AnalyticsPage /></SellerLayout>} />
+      <Route path="/messages" element={<SellerLayout><MessagesPage /></SellerLayout>} />
+      <Route path="/support" element={<SellerLayout><SupportPage /></SellerLayout>} />
+      <Route path="/settings" element={<SellerLayout><SettingsPage /></SellerLayout>} />
+    </Routes>
   );
 };
 
