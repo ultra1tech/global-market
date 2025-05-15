@@ -40,7 +40,7 @@ const TEST_USERS = {
   'buyer@example.com': {
     id: 'test-buyer-id',
     email: 'buyer@example.com',
-    role: 'buyer',
+    role: 'buyer' as 'buyer',
     name: 'Test Buyer',
     password: 'password123',
     avatar: null
@@ -48,7 +48,7 @@ const TEST_USERS = {
   'seller@example.com': {
     id: 'test-seller-id',
     email: 'seller@example.com',
-    role: 'seller',
+    role: 'seller' as 'seller',
     name: 'Test Seller',
     password: 'password123',
     avatar: null
@@ -56,11 +56,20 @@ const TEST_USERS = {
   'admin@example.com': {
     id: 'test-admin-id',
     email: 'admin@example.com',
-    role: 'admin',
+    role: 'admin' as 'admin',
     name: 'Test Admin',
     password: 'password123',
     avatar: null
   }
+};
+
+// Utility function to validate role
+const validateRole = (role: string): 'buyer' | 'seller' | 'admin' => {
+  if (role === 'buyer' || role === 'seller' || role === 'admin') {
+    return role;
+  }
+  // Default to buyer if invalid role
+  return 'buyer';
 };
 
 // Provider component
@@ -77,7 +86,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         // First, check localStorage for a saved user
         const savedUser = localStorage.getItem('auth_user');
         if (savedUser) {
-          setUser(JSON.parse(savedUser));
+          const parsedUser = JSON.parse(savedUser);
+          // Ensure the role is valid
+          parsedUser.role = validateRole(parsedUser.role);
+          
+          setUser(parsedUser as User);
           setIsLoading(false);
           return;
         }
@@ -91,7 +104,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         
         if (data.session?.user) {
           // In a real app, we would fetch additional user data here
-          const newUser = {
+          const newUser: User = {
             id: data.session.user.id,
             email: data.session.user.email || '',
             role: 'buyer', // Default role, would be fetched from user profile
@@ -150,7 +163,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       
       if (data.user) {
         // In a real app, we would fetch additional user data here
-        const newUser = {
+        const newUser: User = {
           id: data.user.id,
           email: data.user.email || '',
           role: 'buyer', // Default role, would be fetched from user profile
@@ -179,10 +192,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
         
         // Create a new user
-        const newUser = {
+        const newUser: User = {
           id: `user-${Date.now()}`,
           email: data.email,
-          role: data.role,
+          role: validateRole(data.role),
           name: data.name,
           avatar: null
         };
@@ -238,6 +251,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       
       // Update local user state
       const updatedUser = { ...user, ...data };
+      // Ensure role is valid
+      if (data.role) {
+        updatedUser.role = validateRole(data.role);
+      }
+      
       setUser(updatedUser);
       localStorage.setItem('auth_user', JSON.stringify(updatedUser));
       
