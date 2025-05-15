@@ -59,7 +59,7 @@ const mockReviews = [
     shopName: 'Leather Crafts Co.',
     rating: 4,
     date: '2023-05-05',
-    content: 'High quality leather and beautiful workmanship. The only reason I'm not giving 5 stars is because one of the card slots is a bit tight.',
+    content: 'High quality leather and beautiful workmanship. The only reason I\'m not giving 5 stars is because one of the card slots is a bit tight.',
     images: ['https://via.placeholder.com/100', 'https://via.placeholder.com/100'],
     helpful: 8
   }
