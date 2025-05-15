@@ -26,7 +26,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Star, Edit2, Trash2, AlertCircle } from 'lucide-react';
 import BuyerLayout from './BuyerLayout';
-import { toast } from 'sonner';
+import { toast } from '@/components/ui/use-toast';
 
 // Mock review data
 const mockReviews = [
@@ -120,22 +120,38 @@ const ReviewsPage: React.FC = () => {
 
   const handleSubmitReview = () => {
     if (newReviewRating === 0) {
-      toast.error("Please select a star rating");
+      toast({
+        title: "Error",
+        description: "Please select a star rating",
+        variant: "destructive"
+      });
       return;
     }
     
     if (!newReviewContent.trim()) {
-      toast.error("Please write a review");
+      toast({
+        title: "Error",
+        description: "Please write a review",
+        variant: "destructive"
+      });
       return;
     }
     
-    toast.success("Review submitted successfully!");
+    toast({
+      title: "Success",
+      description: "Review submitted successfully!",
+      variant: "default"
+    });
     setNewReviewRating(0);
     setNewReviewContent("");
   };
 
   const handleDeleteReview = (reviewId: string) => {
-    toast.success("Review deleted successfully");
+    toast({
+      title: "Success",
+      description: "Review deleted successfully",
+      variant: "default"
+    });
     // In a real app, we would delete the review from the database
   };
 
