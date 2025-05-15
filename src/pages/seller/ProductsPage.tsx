@@ -110,7 +110,7 @@ const products = [
 ];
 
 const ProductsPage = () => {
-  const navigate = useNavigate(); // Add this line to get access to navigate
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [view, setView] = useState("grid");
@@ -128,6 +128,10 @@ const ProductsPage = () => {
   
   const handleDelete = (productId: string) => {
     toast.success(`Product ${productId} deleted successfully`);
+  };
+
+  const handleEdit = (productId: string) => {
+    navigate(`/seller-dashboard/edit-product/${productId}`);
   };
   
   return (
@@ -235,8 +239,7 @@ const ProductsPage = () => {
                   variant="outline" 
                   size="sm" 
                   className="w-1/2 mr-1"
-                  as={Link}
-                  to={`/seller-dashboard/edit-product/${product.id}`}
+                  onClick={() => handleEdit(product.id)}
                 >
                   <Edit className="h-4 w-4 mr-1" /> Edit
                 </Button>
@@ -288,8 +291,7 @@ const ProductsPage = () => {
                       <Button 
                         variant="outline" 
                         size="sm" 
-                        as={Link}
-                        to={`/seller-dashboard/edit-product/${product.id}`}
+                        onClick={() => handleEdit(product.id)}
                       >
                         <Edit className="h-4 w-4" />
                       </Button>
