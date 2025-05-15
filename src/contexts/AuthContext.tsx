@@ -1,6 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import supabase from '@/lib/supabase';
+import { toast } from "sonner";
 
 // Define user type
 interface User {
@@ -16,7 +17,7 @@ interface RegisterData {
   name: string;
   email: string;
   password: string;
-  role: 'buyer' | 'seller';
+  role: 'buyer' | 'seller' | 'admin';
 }
 
 // Define context type
@@ -28,22 +29,60 @@ interface AuthContextType {
   register: (data: RegisterData) => Promise<void>;
   logout: () => void;
   updateUserProfile: (data: Partial<User>) => Promise<void>;
+  getDashboardPath: () => string;
 }
 
 // Create the context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+// Test users for development
+const TEST_USERS = {
+  'buyer@example.com': {
+    id: 'test-buyer-id',
+    email: 'buyer@example.com',
+    role: 'buyer',
+    name: 'Test Buyer',
+    password: 'password123',
+    avatar: null
+  },
+  'seller@example.com': {
+    id: 'test-seller-id',
+    email: 'seller@example.com',
+    role: 'seller',
+    name: 'Test Seller',
+    password: 'password123',
+    avatar: null
+  },
+  'admin@example.com': {
+    id: 'test-admin-id',
+    email: 'admin@example.com',
+    role: 'admin',
+    name: 'Test Admin',
+    password: 'password123',
+    avatar: null
+  }
+};
 
 // Provider component
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Check for existing session on mount
+  // Check for existing session on mount or from localStorage
   useEffect(() => {
     const checkSession = async () => {
       setIsLoading(true);
       
       try {
+        // First, check localStorage for a saved user
+        const savedUser = localStorage.getItem('auth_user');
+        if (savedUser) {
+          setUser(JSON.parse(savedUser));
+          setIsLoading(false);
+          return;
+        }
+
+        // If no localStorage user, check Supabase
         const { data, error } = await supabase.auth.getSession();
         
         if (error) {
@@ -52,13 +91,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         
         if (data.session?.user) {
           // In a real app, we would fetch additional user data here
-          setUser({
+          const newUser = {
             id: data.session.user.id,
             email: data.session.user.email || '',
             role: 'buyer', // Default role, would be fetched from user profile
             name: 'User',  // Default name, would be fetched from user profile
             avatar: null
-          });
+          };
+          setUser(newUser);
+          localStorage.setItem('auth_user', JSON.stringify(newUser));
         } else {
           setUser(null);
         }
@@ -73,26 +114,34 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     checkSession();
   }, []);
 
+  // Get dashboard path based on user role
+  const getDashboardPath = (): string => {
+    if (!user) return "/login";
+    
+    switch (user.role) {
+      case "buyer": return "/buyer/dashboard";
+      case "seller": return "/seller-dashboard";
+      case "admin": return "/admin";
+      default: return "/";
+    }
+  };
+
   // Login function
   const login = async (email: string, password: string) => {
     try {
-      // For development, add special test users
-      if (import.meta.env.DEV) {
-        if (['admin@example.com', 'seller@example.com', 'buyer@example.com'].includes(email) && 
-            password === 'password') {
-          // These are test users for different roles
-          const role = email.split('@')[0] as 'admin' | 'seller' | 'buyer';
-          setUser({
-            id: `test-${role}-id`,
-            email,
-            role,
-            name: `Test ${role.charAt(0).toUpperCase() + role.slice(1)}`,
-            avatar: null
-          });
-          return;
-        }
+      // Check if email is one of our test users
+      const testUser = TEST_USERS[email as keyof typeof TEST_USERS];
+      
+      if (testUser && testUser.password === password) {
+        // Create user object from test user (omitting password)
+        const { password: _, ...userObj } = testUser;
+        setUser(userObj as User);
+        localStorage.setItem('auth_user', JSON.stringify(userObj));
+        toast.success(`Welcome back, ${userObj.name}!`);
+        return;
       }
       
+      // If not a test user, try Supabase login
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       
       if (error) {
@@ -101,16 +150,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       
       if (data.user) {
         // In a real app, we would fetch additional user data here
-        setUser({
+        const newUser = {
           id: data.user.id,
           email: data.user.email || '',
           role: 'buyer', // Default role, would be fetched from user profile
           name: 'User',  // Default name, would be fetched from user profile
           avatar: null
-        });
+        };
+        setUser(newUser);
+        localStorage.setItem('auth_user', JSON.stringify(newUser));
+        toast.success("Login successful!");
       }
     } catch (error) {
       console.error('Login error:', error);
+      toast.error("Invalid email or password. Please try again.");
       throw error;
     }
   };
@@ -118,6 +171,29 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Register function
   const register = async (data: RegisterData) => {
     try {
+      // For development, simulate registration
+      if (import.meta.env.DEV) {
+        // Check if email already exists in test users
+        if (TEST_USERS[data.email as keyof typeof TEST_USERS]) {
+          throw new Error('Email already in use');
+        }
+        
+        // Create a new user
+        const newUser = {
+          id: `user-${Date.now()}`,
+          email: data.email,
+          role: data.role,
+          name: data.name,
+          avatar: null
+        };
+        
+        setUser(newUser);
+        localStorage.setItem('auth_user', JSON.stringify(newUser));
+        toast.success("Registration successful!");
+        return;
+      }
+      
+      // For production, use Supabase
       const { error } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
@@ -133,10 +209,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         throw new Error(error.message);
       }
       
-      // Auto-login after registration (in a real app, we might want email verification first)
+      // Auto-login after registration
       await login(data.email, data.password);
     } catch (error) {
       console.error('Registration error:', error);
+      toast.error(`Registration failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
       throw error;
     }
   };
@@ -145,9 +222,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const logout = async () => {
     try {
       await supabase.auth.signOut();
+      localStorage.removeItem('auth_user');
       setUser(null);
+      toast.success("Logged out successfully");
     } catch (error) {
       console.error('Logout error:', error);
+      toast.error("Error logging out");
     }
   };
 
@@ -156,10 +236,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       if (!user) throw new Error('Not authenticated');
       
-      // In a real app, we would update the user profile in the database
-      setUser({ ...user, ...data });
+      // Update local user state
+      const updatedUser = { ...user, ...data };
+      setUser(updatedUser);
+      localStorage.setItem('auth_user', JSON.stringify(updatedUser));
+      
+      toast.success("Profile updated successfully");
     } catch (error) {
       console.error('Update profile error:', error);
+      toast.error("Failed to update profile");
       throw error;
     }
   };
@@ -171,7 +256,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     login,
     register,
     logout,
-    updateUserProfile
+    updateUserProfile,
+    getDashboardPath
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

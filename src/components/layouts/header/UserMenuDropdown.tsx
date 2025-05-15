@@ -15,24 +15,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const UserMenuDropdown: React.FC = () => {
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, logout, isAuthenticated, getDashboardPath } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
     navigate("/");
-  };
-
-  // Get dynamic dashboard link based on user role
-  const getDashboardLink = () => {
-    if (!user) return "/login";
-    
-    switch(user.role) {
-      case "buyer": return "/buyer/dashboard";
-      case "seller": return "/seller-dashboard";
-      case "admin": return "/admin";
-      default: return "/";
-    }
   };
 
   if (!isAuthenticated) {
@@ -59,17 +47,23 @@ const UserMenuDropdown: React.FC = () => {
               className="h-8 w-8 rounded-full object-cover" 
             />
           ) : (
-            <User size={20} />
+            <div className="h-8 w-8 rounded-full bg-blue-500 text-white flex items-center justify-center">
+              {user?.name?.charAt(0).toUpperCase() || <User size={16} />}
+            </div>
           )}
           <span className="sr-only">User menu</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel className="flex flex-col">
+          <span>{user?.name}</span>
+          <span className="text-xs text-gray-500 font-normal">{user?.email}</span>
+          <span className="text-xs text-gray-500 font-normal capitalize">Role: {user?.role}</span>
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link to={getDashboardLink()}>
+            <Link to={getDashboardPath()}>
               <User className="mr-2 h-4 w-4" />
               <span>Dashboard</span>
             </Link>

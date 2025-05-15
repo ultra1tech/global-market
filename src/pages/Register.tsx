@@ -1,10 +1,10 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import MainLayout from "@/components/layouts/MainLayout";
@@ -12,13 +12,13 @@ import { Mail, User, Lock, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 
 const Register = () => {
-  const { register } = useAuth();
+  const { register, isAuthenticated, getDashboardPath } = useAuth();
   const navigate = useNavigate();
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
-  const [role, setRole] = React.useState<"buyer" | "seller">("buyer");
+  const [role, setRole] = React.useState<"buyer" | "seller" | "admin">("buyer");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
   const [touched, setTouched] = React.useState({
@@ -27,6 +27,13 @@ const Register = () => {
     password: false,
     confirmPassword: false
   });
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(getDashboardPath());
+    }
+  }, [isAuthenticated, navigate, getDashboardPath]);
 
   const handleBlur = (field: 'name' | 'email' | 'password' | 'confirmPassword') => {
     setTouched(prev => ({ ...prev, [field]: true }));
@@ -83,11 +90,9 @@ const Register = () => {
         password,
         role,
       });
-      toast.success("Account created successfully!");
-      navigate("/"); // Redirect to home after registration
+      // Redirection is handled by useEffect
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
-      toast.error("Registration failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -244,7 +249,7 @@ const Register = () => {
                 
                 <div className="space-y-2">
                   <Label>Account Type</Label>
-                  <RadioGroup value={role} onValueChange={(value) => setRole(value as "buyer" | "seller")}>
+                  <RadioGroup value={role} onValueChange={(value) => setRole(value as "buyer" | "seller" | "admin")}>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="buyer" id="buyer" />
                       <Label htmlFor="buyer">I want to buy products (Buyer)</Label>
@@ -252,6 +257,10 @@ const Register = () => {
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="seller" id="seller" />
                       <Label htmlFor="seller">I want to sell products (Seller)</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="admin" id="admin" />
+                      <Label htmlFor="admin">Administrator</Label>
                     </div>
                   </RadioGroup>
                 </div>

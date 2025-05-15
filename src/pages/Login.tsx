@@ -1,18 +1,17 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import MainLayout from "@/components/layouts/MainLayout";
 import { Facebook, Mail, Lock, AlertCircle } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 
 const Login = () => {
-  const { login } = useAuth();
+  const { login, isAuthenticated, getDashboardPath } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -22,6 +21,13 @@ const Login = () => {
     email: false,
     password: false
   });
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(getDashboardPath());
+    }
+  }, [isAuthenticated, navigate, getDashboardPath]);
 
   const handleBlur = (field: 'email' | 'password') => {
     setTouched(prev => ({ ...prev, [field]: true }));
@@ -64,11 +70,9 @@ const Login = () => {
 
     try {
       await login(email, password);
-      toast.success("Login successful!");
-      navigate("/"); // Redirect to home after login
+      // Redirection is handled in the useEffect
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
-      toast.error("Login failed. Please check your credentials.");
     } finally {
       setLoading(false);
     }
@@ -186,6 +190,18 @@ const Login = () => {
                     <p className="text-red-500 text-xs mt-1">Password must be at least 6 characters</p>
                   )}
                 </div>
+
+                <div className="pt-2">
+                  <div className="bg-blue-50 p-3 rounded-md mb-4">
+                    <h4 className="font-medium text-blue-800 mb-1">Test Accounts:</h4>
+                    <p className="text-sm text-blue-700">
+                      Buyer: buyer@example.com / password123<br />
+                      Seller: seller@example.com / password123<br />
+                      Admin: admin@example.com / password123
+                    </p>
+                  </div>
+                </div>
+
                 <Button 
                   type="submit" 
                   className="w-full" 

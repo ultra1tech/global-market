@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from "sonner"
 import Index from './pages/Index'
 import NotFound from './pages/NotFound'
@@ -28,12 +28,15 @@ import ContactSupportPage from './pages/help/ContactSupportPage'
 import Stores from './pages/Stores'
 import StoreDetail from './pages/StoreDetail'
 import { WishlistProvider } from './contexts/WishlistContext'
+import ProtectedRoute from './components/auth/ProtectedRoute'
+import { useAuth } from './contexts/AuthContext'
 
 function App() {
   return (
     <BrowserRouter>
       <WishlistProvider>
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -44,21 +47,32 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           
-          {/* Seller Routes */}
-          <Route path="/seller-dashboard/*" element={<SellerDashboard />} />
+          {/* Seller Routes - Protected for sellers */}
+          <Route path="/seller-dashboard/*" element={
+            <ProtectedRoute allowedRoles={['seller', 'admin']}>
+              <SellerDashboard />
+            </ProtectedRoute>
+          } />
           
-          {/* Buyer Routes */}
-          <Route path="/buyer/dashboard" element={<BuyerDashboard />} />
-          <Route path="/buyer/orders" element={<BuyerOrdersPage />} />
-          <Route path="/buyer/reviews" element={<BuyerReviewsPage />} />
-          <Route path="/buyer/profile" element={<BuyerProfilePage />} />
-          <Route path="/buyer/wishlist" element={<WishlistPage />} />
+          {/* Buyer Routes - Protected for buyers */}
+          <Route path="/buyer/*" element={
+            <ProtectedRoute allowedRoles={['buyer', 'admin']}>
+              <Routes>
+                <Route path="/dashboard" element={<BuyerDashboard />} />
+                <Route path="/orders" element={<BuyerOrdersPage />} />
+                <Route path="/reviews" element={<BuyerReviewsPage />} />
+                <Route path="/profile" element={<BuyerProfilePage />} />
+                <Route path="/wishlist" element={<WishlistPage />} />
+              </Routes>
+            </ProtectedRoute>
+          } />
           
-          {/* Admin Routes */}
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/orders" element={<OrdersPage />} />
-          <Route path="/admin/payments" element={<PaymentsPage />} />
-          <Route path="/admin/sellers" element={<SellersPage />} />
+          {/* Admin Routes - Protected for admins only */}
+          <Route path="/admin/*" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } />
           
           {/* Store Routes */}
           <Route path="/stores" element={<Stores />} />
