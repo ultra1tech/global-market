@@ -48,8 +48,8 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <Sidebar>
-        <SidebarHeader className="p-4 border-b">
+      <Sidebar className="bg-sidebar text-sidebar-foreground">
+        <SidebarHeader className="p-4 border-b border-sidebar-border">
           <div className="flex items-center">
             <Store className="mr-2 h-5 w-5 text-primary" />
             <div>
@@ -70,7 +70,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
                     `flex items-center p-2 rounded-md ${
                       isActive 
                         ? 'bg-primary text-primary-foreground font-medium' 
-                        : 'text-foreground hover:bg-muted'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                     }`
                   }
                 >
@@ -88,7 +88,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
                     `flex items-center p-2 rounded-md ${
                       isActive 
                         ? 'bg-primary text-primary-foreground font-medium' 
-                        : 'text-foreground hover:bg-muted'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                     }`
                   }
                 >
@@ -106,7 +106,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
                     `flex items-center p-2 rounded-md ${
                       isActive 
                         ? 'bg-primary text-primary-foreground font-medium' 
-                        : 'text-foreground hover:bg-muted'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                     }`
                   }
                 >
@@ -124,7 +124,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
                     `flex items-center p-2 rounded-md ${
                       isActive 
                         ? 'bg-primary text-primary-foreground font-medium' 
-                        : 'text-foreground hover:bg-muted'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                     }`
                   }
                 >
@@ -142,7 +142,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
                     `flex items-center p-2 rounded-md ${
                       isActive 
                         ? 'bg-primary text-primary-foreground font-medium' 
-                        : 'text-foreground hover:bg-muted'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                     }`
                   }
                 >
@@ -160,7 +160,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
                     `flex items-center p-2 rounded-md ${
                       isActive 
                         ? 'bg-primary text-primary-foreground font-medium' 
-                        : 'text-foreground hover:bg-muted'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                     }`
                   }
                 >
@@ -181,7 +181,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
                     `flex items-center p-2 rounded-md ${
                       isActive 
                         ? 'bg-primary text-primary-foreground font-medium' 
-                        : 'text-foreground hover:bg-muted'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                     }`
                   }
                 >
@@ -199,7 +199,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
                     `flex items-center p-2 rounded-md ${
                       isActive 
                         ? 'bg-primary text-primary-foreground font-medium' 
-                        : 'text-foreground hover:bg-muted'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                     }`
                   }
                 >
@@ -214,7 +214,7 @@ const SellerLayout: React.FC<SellerLayoutProps> = ({ children }) => {
         <SidebarFooter>
           <Button 
             variant="ghost" 
-            className="w-full justify-start" 
+            className="w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground" 
             onClick={handleLogout}
           >
             <LogOut className="mr-3 h-5 w-5" />
