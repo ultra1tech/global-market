@@ -35,7 +35,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar using the Sidebar component */}
-      <Sidebar>
+      <Sidebar className="bg-sidebar text-sidebar-foreground">
         <AdminSidebar userName={user.name} onLogout={handleLogout} />
       </Sidebar>
       

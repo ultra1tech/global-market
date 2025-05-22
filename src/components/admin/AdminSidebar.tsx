@@ -29,15 +29,15 @@ interface AdminSidebarProps {
 const AdminSidebar: React.FC<AdminSidebarProps> = ({ userName, onLogout }) => {
   return (
     <>
-      <SidebarHeader className="border-b border-gray-800 p-4">
+      <SidebarHeader className="border-b border-gray-800 p-4 bg-sidebar">
         <div className="flex items-center space-x-2">
           <ShieldAlert size={20} className="text-primary" />
-          <h2 className="font-semibold text-xl">Admin Panel</h2>
+          <h2 className="font-semibold text-xl text-sidebar-foreground">Admin Panel</h2>
         </div>
-        <p className="text-sm text-muted-foreground">{userName}</p>
+        <p className="text-sm text-sidebar-foreground">{userName}</p>
       </SidebarHeader>
       
-      <SidebarContent className="bg-sidebar text-sidebar-foreground">
+      <SidebarContent className="bg-sidebar">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild tooltip="Dashboard">
@@ -45,10 +45,10 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ userName, onLogout }) => {
                 to="/admin" 
                 end
                 className={({ isActive }) => 
-                  `flex items-center p-2 rounded-md ${
+                  `flex items-center p-2 rounded-md text-sidebar-foreground ${
                     isActive 
                       ? 'bg-primary text-primary-foreground font-medium' 
-                      : 'text-sidebar-foreground hover:bg-sidebar-accent'
+                      : 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                   }`
                 }
               >
@@ -63,10 +63,10 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ userName, onLogout }) => {
               <NavLink 
                 to="/admin/users" 
                 className={({ isActive }) => 
-                  `flex items-center p-2 rounded-md ${
+                  `flex items-center p-2 rounded-md text-sidebar-foreground ${
                     isActive 
                       ? 'bg-primary text-primary-foreground font-medium' 
-                      : 'text-sidebar-foreground hover:bg-sidebar-accent'
+                      : 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                   }`
                 }
               >
@@ -81,10 +81,10 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ userName, onLogout }) => {
               <NavLink 
                 to="/admin/stores" 
                 className={({ isActive }) => 
-                  `flex items-center p-2 rounded-md ${
+                  `flex items-center p-2 rounded-md text-sidebar-foreground ${
                     isActive 
                       ? 'bg-primary text-primary-foreground font-medium' 
-                      : 'text-sidebar-foreground hover:bg-sidebar-accent'
+                      : 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                   }`
                 }
               >
@@ -99,10 +99,10 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ userName, onLogout }) => {
               <NavLink 
                 to="/admin/orders" 
                 className={({ isActive }) => 
-                  `flex items-center p-2 rounded-md ${
+                  `flex items-center p-2 rounded-md text-sidebar-foreground ${
                     isActive 
                       ? 'bg-primary text-primary-foreground font-medium' 
-                      : 'text-sidebar-foreground hover:bg-sidebar-accent'
+                      : 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                   }`
                 }
               >
@@ -117,10 +117,10 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ userName, onLogout }) => {
               <NavLink 
                 to="/admin/reports" 
                 className={({ isActive }) => 
-                  `flex items-center p-2 rounded-md ${
+                  `flex items-center p-2 rounded-md text-sidebar-foreground ${
                     isActive 
                       ? 'bg-primary text-primary-foreground font-medium' 
-                      : 'text-sidebar-foreground hover:bg-sidebar-accent'
+                      : 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                   }`
                 }
               >
@@ -135,10 +135,10 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ userName, onLogout }) => {
               <NavLink 
                 to="/admin/settings" 
                 className={({ isActive }) => 
-                  `flex items-center p-2 rounded-md ${
+                  `flex items-center p-2 rounded-md text-sidebar-foreground ${
                     isActive 
                       ? 'bg-primary text-primary-foreground font-medium' 
-                      : 'text-sidebar-foreground hover:bg-sidebar-accent'
+                      : 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                   }`
                 }
               >
@@ -150,10 +150,10 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ userName, onLogout }) => {
         </SidebarMenu>
       </SidebarContent>
       
-      <SidebarFooter className="bg-sidebar text-sidebar-foreground">
+      <SidebarFooter className="bg-sidebar">
         <Button 
           variant="ghost" 
-          className="w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent" 
+          className="w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground" 
           onClick={onLogout}
         >
           <LogOut className="mr-3 h-5 w-5" />
