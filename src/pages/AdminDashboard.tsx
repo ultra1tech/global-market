@@ -35,7 +35,7 @@ const PlaceholderPage = ({ title }: { title: string }) => (
 const AdminDashboard = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const { open, setOpen } = useSidebar(); // Updated to use open and setOpen instead of collapsed and setCollapsed
+  const { open, setOpen } = useSidebar();
 
   // Redirect to the login page if the user is not an admin
   React.useEffect(() => {
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
           <p className="text-sm text-muted-foreground">{user.name}</p>
         </SidebarHeader>
         
-        <SidebarContent>
+        <SidebarContent className="bg-sidebar text-sidebar-foreground">
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip="Dashboard">
@@ -78,7 +78,7 @@ const AdminDashboard = () => {
                     `flex items-center p-2 rounded-md ${
                       isActive 
                         ? 'bg-primary text-primary-foreground font-medium' 
-                        : 'text-foreground hover:bg-muted'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent'
                     }`
                   }
                 >
@@ -96,7 +96,7 @@ const AdminDashboard = () => {
                     `flex items-center p-2 rounded-md ${
                       isActive 
                         ? 'bg-primary text-primary-foreground font-medium' 
-                        : 'text-foreground hover:bg-muted'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent'
                     }`
                   }
                 >
@@ -114,7 +114,7 @@ const AdminDashboard = () => {
                     `flex items-center p-2 rounded-md ${
                       isActive 
                         ? 'bg-primary text-primary-foreground font-medium' 
-                        : 'text-foreground hover:bg-muted'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent'
                     }`
                   }
                 >
@@ -132,7 +132,7 @@ const AdminDashboard = () => {
                     `flex items-center p-2 rounded-md ${
                       isActive 
                         ? 'bg-primary text-primary-foreground font-medium' 
-                        : 'text-foreground hover:bg-muted'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent'
                     }`
                   }
                 >
@@ -150,7 +150,7 @@ const AdminDashboard = () => {
                     `flex items-center p-2 rounded-md ${
                       isActive 
                         ? 'bg-primary text-primary-foreground font-medium' 
-                        : 'text-foreground hover:bg-muted'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent'
                     }`
                   }
                 >
@@ -168,7 +168,7 @@ const AdminDashboard = () => {
                     `flex items-center p-2 rounded-md ${
                       isActive 
                         ? 'bg-primary text-primary-foreground font-medium' 
-                        : 'text-foreground hover:bg-muted'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent'
                     }`
                   }
                 >
@@ -180,10 +180,10 @@ const AdminDashboard = () => {
           </SidebarMenu>
         </SidebarContent>
         
-        <SidebarFooter>
+        <SidebarFooter className="bg-sidebar text-sidebar-foreground">
           <Button 
             variant="ghost" 
-            className="w-full justify-start" 
+            className="w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent" 
             onClick={handleLogout}
           >
             <LogOut className="mr-3 h-5 w-5" />
